@@ -1,0 +1,38 @@
+.NavBar {
+    top: 0;
+    background-color: grey;
+    overflow: hidden;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 75px;
+}
+
+.NavBar-link {
+    text-decoration: none;
+    color: black;
+    padding: 10px; 
+    margin: 10px;
+}
+
+
+.NavBar a:hover {
+    color: white;
+}
+
+.home {
+    color: black;
+    font-weight: bold;
+    font-size: 25px;
+    float: left;
+}
+
+.content {
+    float: left;
+
+}
+
+.user {
+    float: right;
+}
