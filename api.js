@@ -120,8 +120,6 @@ class SpellBookApi {
     /**Retrieve character data */
     static async getCharacter(token, char_id) {
         SpellBookApi.token = token;
-        // console.log("in api token", token)
-        // console.log("in api id", char_id)
         let res = await this.request(`characters/${char_id}`, token.token, "get")
         return res.character;
     }
@@ -134,12 +132,21 @@ class SpellBookApi {
     }
 
     /** Assign spell to character */
+    static async assignSpell(spellIdx, token, char_id) {
+        SpellBookApi.token = token;
+        let res = await this.request(`characters/${char_id}/spell_cards/${spellIdx}`, token.token, "post")
+        return res;
+    }
 
     /** Unassign spell from character */
+    static async unassignSpell(spellIdx, token, char_id) {
+        SpellBookApi.token = token;
+        let res = await this.request(`characters/${char_id}/spell_cards/${spellIdx}`, token.token, "delete")
+        return res;
+    }
 
     /** Delete Character */
     static async deleteCharacter(id) {
-        console.log(id)
         let res = await this.request(`characters/${id}`, id, "delete")
         return res;
     }

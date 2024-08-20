@@ -123,7 +123,7 @@ const CharacterForm = ({createCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="strength">Strength</label>
                     </div>
-                <select value={formData.strength} onChange={handleChange}>
+                <select id="strength" value={formData.strength} name="strength" onChange={handleChange}>
                     <option key="placeholder" value="">STR</option>
                     {statRange}
                 </select>
@@ -133,7 +133,7 @@ const CharacterForm = ({createCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="dexterity">Dexterity</label>
                     </div>
-                <select value={formData.dexterity} onChange={handleChange}>
+                <select id="dexterity" value={formData.dexterity} name="dexterity" onChange={handleChange}>
                     <option key="placeholder" value="">DEX</option>
                     {statRange}
                 </select>
@@ -143,7 +143,7 @@ const CharacterForm = ({createCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="constitution">Constitution</label>
                     </div>
-                <select value={formData.constitution} onChange={handleChange}>
+                <select id="constitution" value={formData.constitution} name="constitution" onChange={handleChange}>
                     <option key="placeholder" value="">CON</option>
                     {statRange}
                 </select>
@@ -153,7 +153,7 @@ const CharacterForm = ({createCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="intelligence">Intelligence</label>
                     </div>
-                <select value={formData.intelligence} onChange={handleChange}>
+                <select id="intelligence" value={formData.intelligence} name="intelligence" onChange={handleChange}>
                     <option key="placeholder" value="">INT</option>
                     {statRange}
                 </select>
@@ -163,7 +163,7 @@ const CharacterForm = ({createCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="wisdom">Wisdom</label>
                     </div>
-                <select value={formData.wisdom} onChange={handleChange}>
+                <select id="wisdom" value={formData.wisdom} name="wisdom" onChange={handleChange}>
                     <option key="placeholder" value="">WIS</option>
                     {statRange}
                 </select>
@@ -173,7 +173,7 @@ const CharacterForm = ({createCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="charisma">Charisma</label>
                     </div>
-                <select value={formData.charisma} onChange={handleChange}>
+                <select id="charisma" value={formData.charisma} name="charisma" onChange={handleChange}>
                     <option key="placeholder" value="">CHA</option>
                     {statRange}
                 </select>

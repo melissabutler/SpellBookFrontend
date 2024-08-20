@@ -9,14 +9,27 @@ import Home from "./Components/Home";
 import LoginForm from "./Components/LoginForm";
 import SignupForm from "./Components/SignupForm";
 import LogOut from "./Components/LogOut";
-import SpellList from "./Components/SpellList";
-import CharacterList from "./Components/CharacterList";
 import Profile from "./Components/Profile"
+
+import SpellList from "./Components/SpellList";
+import SpellDetail from "./Components/SpellDetail"
+
+import CharacterList from "./Components/CharacterList";
+
 import CharacterForm from "./Components/CharacterForm";
 import CharacterProfile from "./Components/CharacterProfile";
-import CharacterEditForm from "./Components/CharacterEditForm";
 
-const RoutesList = ({login, signUp, logOut, editUser, getCharacter, createCharacter, editCharacter, deleteCharacter}) => {
+const RoutesList = ({login, 
+                        signUp, 
+                        logOut, 
+                        editUser, 
+                        getCharacter, 
+                        createCharacter, 
+                        editCharacter, 
+                        deleteCharacter,
+                        assignSpell,
+                        unassignSpell,
+}) => {
     const currentUser = useContext(CurrentUserContext)
 
     return (
@@ -36,7 +49,7 @@ const RoutesList = ({login, signUp, logOut, editUser, getCharacter, createCharac
                 />
             <Route 
                 path='/logout'
-                element={<LogOut logOut={logOut}/>}
+                element={currentUser ? (<LogOut logOut={logOut}/>) : <Navigate replace to="/"/>}
                 />
 
             {/* Spell Routes */}
@@ -46,27 +59,31 @@ const RoutesList = ({login, signUp, logOut, editUser, getCharacter, createCharac
                 />
             <Route 
                 path="/spells/:idx"
-                // element={<SpellDetail />}
+                element={<SpellDetail assignSpell={assignSpell}/>}
             />
             <Route 
                 path="/characters"
-                element={<CharacterList/>}
+                element={currentUser ? (<CharacterList/>) : <Navigate replace to="/"/>}
                 /> 
 
             <Route
                 path="/characters/create"
-                element={<CharacterForm createCharacter={createCharacter}/>}
+                element={ currentUser ? (<CharacterForm createCharacter={createCharacter}/>) : <Navigate replace to="/"/>}
             />
 
             <Route 
                 path="/characters/:id"
-                element={<CharacterProfile getCharacter={getCharacter} editCharacter={editCharacter} deleteCharacter={deleteCharacter}/>}
+                element={ currentUser ? (<CharacterProfile getCharacter={getCharacter} 
+                                                            editCharacter={editCharacter} 
+                                                            deleteCharacter={deleteCharacter}
+                                                            unassignSpell={unassignSpell}
+                    />) : <Navigate replace to="/"/>}
                 /> 
 
 
             <Route 
                 path='/profile'
-                element={<Profile editUser={editUser}/>}
+                element={currentUser ? (<Profile editUser={editUser}/>) : <Navigate replace to="/"/>}
                 />
 
             

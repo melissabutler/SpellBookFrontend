@@ -1,24 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import CurrentUserContext from "../currentUserContext";
 import SpellBookApi from "../../api";
+import SpellCard from "./SpellCard";
 
-const SpellDetail = ({spellIdx}) => {
-    const currentUser = useContext(CurrentUserContext)
+const SpellDetail = ({assignSpell}) => {
     const [spell, setSpell] = useState("")
-
-    useEffect ( () => {
-        async function getSpell() {
-            let spell = await SpellBookApi.getSpellDetails(spellIdx);
-            setSpell(spell)
-        }
-        getSpell();
-    })
+    const { idx } = useParams();
 
 
     return (
     <div>
-        {spell.level}{spell.name}
+        <SpellCard assignSpell={assignSpell} spellIdx={idx} details={true} charProfile={false} />
     </div>)
 }
 

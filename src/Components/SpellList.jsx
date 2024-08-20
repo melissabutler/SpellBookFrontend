@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+
 import ClassSelect from "./ClassSelect.jsx";
 
 import SpellBookApi from "../../api.js"
 
 import ListSearch from "./ListSearch.jsx";
-import SpellDetail from "./SpellDetail.jsx";
+import SpellCard from "./SpellCard.jsx";
 
 
 const SpellList = () => {
@@ -55,8 +58,10 @@ const SpellList = () => {
             <ListSearch getTerm={getTerm}/>
             <ul className="SpellList">
                 {spells.map(spell => (
-                    //Link
-                        <SpellDetail key={spell.index} spellIdx={spell.index} />
+                    <Link key={spell.index} to={`/spells/${spell.index}`}>
+                        <SpellCard key={spell.index} spellIdx={spell.index} details={false}/>
+                    </Link>
+                        
                 ))}
             </ul>
         </div>

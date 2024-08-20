@@ -1,16 +1,54 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import CurrentUserContext from "../currentUserContext";
+import SpellBookApi from "../../api";
 
+import AssignSpellForm from "./AddSpellForm";
 
-const SpellCard = ({spell}) => {
-    const currentUser = useContext(CurrentUserContext);
-    return (
-        <div className="SpellCard">
-            <h1 className="SpellCard-name">{spell.name}</h1>
-            <p className="SpellCard-desc">{spell.desc}</p>
+const SpellCard = ({assignSpell, 
+                    spellIdx, 
+                    details, 
+                    charProfile}) => {
+    const currentUser = useContext(CurrentUserContext)
+    const [spell, setSpell] = useState("")
+    const [school, setSchool] = useState("")
+    const [cantrip, setCantrip] = useState(false)
+
+    useEffect ( () => {
+        async function getSpell() {
+          let spell = await SpellBookApi.getSpellDetails(spellIdx);
+             
+          setSpell({...spell})
+          setSchool(spell.school.name)
+
+          if(spell.level === 0){
+            setCantrip(true)
+          }
+        }
+        getSpell();
+    }, [])
+
+   
+
+  return (
+    <div className="SpellCard">
+      <div className="SpellCard-content">
+        <h2 className="SpellCard-name">{spell.name}</h2>
+        {cantrip ? <h3>School of {school} Cantrip</h3> : <h3>Level {spell.level} School of {school} Spell</h3>}
+         {details === true && 
+         <div className="SpellCard-description">
+          <p>{spell.desc}</p>
         </div>
-    )
+        }
+        
+        {charProfile === false &&
+        <AssignSpellForm assignSpell={assignSpell} spellIdx={spellIdx}/>
+        }
+        </div>
+          
+        
+    
+    </div>)
 }
 
 export default SpellCard;

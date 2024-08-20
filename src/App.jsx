@@ -124,12 +124,40 @@ async function deleteCharacter(char_id) {
   }
 }
 
+/** When spell is assigned to character, call API to update character */
+async function assignSpell(spellIdx, char_id){
+  try {
+    console.log("in app", spellIdx, char_id)
+    let res = await SpellBookApi.assignSpell(spellIdx, token, char_id)
+  } catch(err) {
+    alert(err);
+  }
+}
+
+async function unassignSpell(spellIdx, char_id){
+  try {
+    let res = await SpellBookApi.unassignSpell(spellIdx, token, char_id)
+    // console.log("unassign spell called", spellIdx, char_id)
+  } catch(err) {
+    alert(err);
+  }
+}
+
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>
         <BrowserRouter>
           <NavBar />
-          <RoutesList login={login} signUp={signUp} logOut={logOut} editUser={editUser} getCharacter={getCharacter} createCharacter={createCharacter} editCharacter={editCharacter} deleteCharacter={deleteCharacter}/>
+          <RoutesList login={login} 
+                      signUp={signUp} 
+                      logOut={logOut} 
+                      editUser={editUser} 
+                      getCharacter={getCharacter} 
+                      createCharacter={createCharacter} 
+                      editCharacter={editCharacter} 
+                      deleteCharacter={deleteCharacter} 
+                      assignSpell={assignSpell}
+                      unassignSpell={unassignSpell}/>
         </BrowserRouter>
       </CurrentUserContext.Provider>
     </div>
