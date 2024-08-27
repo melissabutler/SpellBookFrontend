@@ -3,7 +3,8 @@ import useFields from "../Hooks/useFields";
 import { useNavigate } from "react-router-dom";
 import CurrentUserContext from "../currentUserContext";
 import useToggle from "../Hooks/useToggleState";
-import SpellBookApi from "../../api";
+
+import "./CharacterForm.css"
 
 const CharacterForm = ({createCharacter}) => {
     const currentUser = useContext(CurrentUserContext);
@@ -41,6 +42,7 @@ const CharacterForm = ({createCharacter}) => {
                 "wisdom": parseInt(formData.wisdom),
                 "charisma": parseInt(formData.charisma)
             }
+           
             newCharacter.username = currentUser.username;
             setNewCharacter(newCharacter)
             toggleCharacterMade();
@@ -64,7 +66,7 @@ const CharacterForm = ({createCharacter}) => {
     */
     let statRange = [];
 
-    for(let i = 0; i <= 20; i++){
+    for(let i = 1; i <= 20; i++){
         let key = "level-" + i;
         statRange.push(<option key={key} value={i} >{i}</option>)
     }

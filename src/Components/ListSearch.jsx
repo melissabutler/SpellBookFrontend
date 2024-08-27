@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ClassSelect from "./ClassSelect";
+import "./ListSearch.css"
 
 const ListSearch = ({getTerm}) => {
 

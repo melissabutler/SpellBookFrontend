@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import "./AssignSpellForm.css"
 
 import CurrentUserContext from "../currentUserContext";
 import useFields from "../Hooks/useFields"

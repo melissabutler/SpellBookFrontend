@@ -6,13 +6,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 import SpellBookApi from "../../api";
 import CurrentCharacterContext from "../currentCharacterContext";
 
-const CharacterEditForm = ({editCharacter}) => {
+const CharacterEditForm = ({editCharacter, toggleEdit}) => {
     const navigate = useNavigate();
     let character = useContext(CurrentCharacterContext)
     let { id }= useParams();
-
-    console.log(character.char_name)
-
 
     const [formData, handleChange, resetFormData] = useFields({
         char_name: character.char_name,
@@ -25,10 +22,8 @@ const CharacterEditForm = ({editCharacter}) => {
         wisdom: character.wisdom,
         charisma: character.charisma,
 })
-    // console.log("outside useffect", character)
 
     const handleSubmit = e => {
-        console.log("handleSubmit")
         e.preventDefault();
   
         let updatedCharacter = {
@@ -42,11 +37,10 @@ const CharacterEditForm = ({editCharacter}) => {
             "wisdom": parseInt(formData.wisdom),
             "charisma": parseInt(formData.charisma)
         }
-        console.log(updatedCharacter)
+        
         editCharacter({updatedCharacter}, id)
-        navigate(`/characters/${id}`)
+        toggleEdit();
     }
-
 
      /** This piece condenses the options list for numeric stats, in this case character level and ability scores.
      * As they both are a range from 1-20, they can share this list. 
@@ -111,7 +105,7 @@ const CharacterEditForm = ({editCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="strength">Strength</label>
                     </div>
-                <select value={formData.strength} onChange={handleChange}>
+                <select value={formData.strength} name="strength" onChange={handleChange}>
                     <option key="placeholder" value="">STR</option>
                     {statRange}
                 </select>
@@ -121,7 +115,7 @@ const CharacterEditForm = ({editCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="dexterity">Dexterity</label>
                     </div>
-                <select value={formData.dexterity} onChange={handleChange}>
+                <select value={formData.dexterity} name="dexterity" onChange={handleChange}>
                     <option key="placeholder" value="">DEX</option>
                     {statRange}
                 </select>
@@ -131,7 +125,7 @@ const CharacterEditForm = ({editCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="constitution">Constitution</label>
                     </div>
-                <select value={formData.constitution} onChange={handleChange}>
+                <select value={formData.constitution} name="constitution" onChange={handleChange}>
                     <option key="placeholder" value="">CON</option>
                     {statRange}
                 </select>
@@ -141,7 +135,7 @@ const CharacterEditForm = ({editCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="intelligence">Intelligence</label>
                     </div>
-                <select value={formData.intelligence} onChange={handleChange}>
+                <select value={formData.intelligence} name="intelligence" onChange={handleChange}>
                     <option key="placeholder" value="">INT</option>
                     {statRange}
                 </select>
@@ -151,7 +145,7 @@ const CharacterEditForm = ({editCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="wisdom">Wisdom</label>
                     </div>
-                <select value={formData.wisdom} onChange={handleChange}>
+                <select value={formData.wisdom} name="wisdom" onChange={handleChange}>
                     <option key="placeholder" value="">WIS</option>
                     {statRange}
                 </select>
@@ -161,7 +155,7 @@ const CharacterEditForm = ({editCharacter}) => {
                     <div className="CharacterForm-section-label">
                         <label className="CharacterForm-label" htmlFor="charisma">Charisma</label>
                     </div>
-                <select value={formData.charisma} onChange={handleChange}>
+                <select value={formData.charisma} name="charisma" onChange={handleChange}>
                     <option key="placeholder" value="">CHA</option>
                     {statRange}
                 </select>

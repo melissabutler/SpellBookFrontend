@@ -3,14 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import SpellBookApi from "../../api";
 import CurrentUserContext from "../currentUserContext";
 
+import "./CharacterCard.css"
+
 const CharacterCard = ({character}) => {
-    let currentUser = useContext(CurrentUserContext);
 
 
     return (
             <div className="CharacterCard">
-                <h3>{character.char_name}</h3>
-                {character.char_class}
+                <h3 className="CharacterCard-name">{character.char_name}</h3>
             </div>
     )
 }

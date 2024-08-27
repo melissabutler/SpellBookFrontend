@@ -1,0 +1,32 @@
+.AssignSpellForm {
+    text-align: center;
+}
+
+.AssignSpellForm-form {
+    margin: 20px;
+}
+
+select {
+    margin: 1rem;
+    width: 50vw;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+option {
+    padding: 1rem;
+}
+input {
+    font-size: 20px;
+    text-align: center;
+    margin: 1rem;
+    width: 50vw;
+    padding: 1rem;
+    
+    border-radius: 10px;
+}
+button {
+    margin: 20px;
+    float: none;
+}

@@ -9,7 +9,6 @@ const useFields = (initialState) => {
             ...formData,
             [e.target.name]: [e.target.value]
         }))
-        console.log(formData)
     }
     
     const resetFormData = () => {

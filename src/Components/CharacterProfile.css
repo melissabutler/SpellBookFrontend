@@ -1,0 +1,10 @@
+.CharacterProfile {
+    /* display: inline-block; */
+    margin: auto;
+    align-items: center;
+}
+
+.CharacterProfile-info{
+    display: inline-block;
+    place-content: center;
+}

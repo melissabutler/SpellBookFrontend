@@ -83,6 +83,7 @@ async function editUser({updatedUser}) {
  */
 async function createCharacter(newCharacter) {
   try {
+    console.log(newCharacter)
     let res = await SpellBookApi.createCharacter(token, newCharacter);
     return res;
   } catch(err){
@@ -96,6 +97,7 @@ async function getCharacter(char_id) {
   try {
     // console.log("in app token", token)
     let res = await SpellBookApi.getCharacter(token, char_id)
+    console.log("in app", res)
     return res;
   } catch(err) {
     alert(err);
@@ -142,6 +144,7 @@ async function unassignSpell(spellIdx, char_id){
     alert(err);
   }
 }
+
 
   return (
     <div>

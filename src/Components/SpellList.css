@@ -1,0 +1,11 @@
+.SpellList {
+    display: inline;
+    margin: auto;
+    width: 55vw;
+    list-style: none;
+    align-items: center;
+}
+
+.SpellList-Link {
+    color: black;
+}

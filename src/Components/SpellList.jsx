@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 
-import ClassSelect from "./ClassSelect.jsx";
-
 import SpellBookApi from "../../api.js"
 
 import ListSearch from "./ListSearch.jsx";
 import SpellCard from "./SpellCard.jsx";
+
+import "./SpellList.css"
 
 
 const SpellList = () => {
@@ -53,17 +53,20 @@ const SpellList = () => {
     }
 
     return (
-        <div>
-            Spell List
-            <ListSearch getTerm={getTerm}/>
-            <ul className="SpellList">
+        <div className="SpellList">
+            <h1 className="SpellList-title">Spell List</h1>
+            <div className="SpellList-search">
+                <ListSearch getTerm={getTerm}/>
+            </div>
+            <div className="SpellList-list">
                 {spells.map(spell => (
-                    <Link key={spell.index} to={`/spells/${spell.index}`}>
+                    <Link className="SpellList-Link" key={spell.index} to={`/spells/${spell.index}`}>
                         <SpellCard key={spell.index} spellIdx={spell.index} details={false}/>
                     </Link>
                         
                 ))}
-            </ul>
+            </div>
+            
         </div>
     )
 }
