@@ -2,12 +2,21 @@ import React from "react";
 
 import "./AbilityScoreCard.css"
 
+
+import { Container, Row, Col, Button } from 'react-bootstrap';
+
 const AbilityScoreCard = ({ability, score}) => {
     return (
-        <div className="AbilityScoreCard">
-            <h3 className="AbilityScoreCard-ability">{ability}</h3>
-            <h4 className="AbilityScoreCard-score">{score}</h4>
-        </div>
+        <Container className="AbilityScoreCard">
+        <Row >
+            <h4 className="AbilityScoreCard-ability">{ability}</h4>
+        </Row>
+        <Row>
+            <h5 className="AbilityScoreCard-score">{score}</h5>
+        </Row>
+
+        </Container>
+        
     )
 }
 

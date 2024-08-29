@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SpellBookApi from "../../api";
 import { useNavigate } from "react-router-dom"
@@ -11,14 +11,24 @@ import useLocalStorage from "../Hooks/useLocalStorage";
 import SpellCard from "./SpellCard";
 import AbilityScoreCard from "./AbilityScoreCard";
 
+
+import { Container, Row, Col, Button, Overlay, Tooltip } from 'react-bootstrap';
+
+import SpellCardInfo from "./SpellCardInfo";
+
 import "./CharacterProfile.css"
 
-const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassignSpell}) => {
+const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassignSpell, getClass}) => {
     const [currentCharacter, setCurrentCharacter] = useLocalStorage("currentCharacter", {})
     const [showEdit, toggleEdit] = useToggle(false)
     const [showDesc, toggleDesc] = useToggle(false)
     const [change, toggleChange] = useToggle(true)
     const [spells, setSpells] = useState([])
+    const [classInfo, setClassInfo] = useState([])
+
+    const [show, toggleShow] = useToggle(false)
+    const target = useRef(null)
+
 
     let { id } = useParams();
    
@@ -32,8 +42,18 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
             setSpells([...currentCharacter.spells])
             toggleChange();
         }
+        
         getData();
     }, [])
+
+    useEffect (() => {
+        async function getData() {
+            let data = await getClass(currentCharacter.char_class)
+            setClassInfo(data.data.spellcasting.spellcasting_ability.name)
+        }
+        getData()
+    }, [currentCharacter])
+    
 
     /** When Edit status toggles, update character  */
     useEffect( () => {
@@ -75,10 +95,58 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
 
     return (
         <CurrentCharacterContext.Provider value={currentCharacter}>       
-         <div className="CharacterProfile"> 
-            <h1 className="CharacterProfile-title">{currentCharacter.char_name}</h1>
-            <h2 className="CharacterProfile-class-level"> Level {currentCharacter.lvl} {charClass} </h2>
-
+         <Container className="CharacterProfile">
+            <Row>
+                <Col>
+                <h1 className="CharacterProfile-title">{currentCharacter.char_name}</h1>
+                <h2 className="CharacterProfile-class-level"> Level {currentCharacter.lvl} {charClass} </h2>
+                </Col>
+                <Col xs={3}>
+                    <Container className="CharacterProfile-castingMod">
+                        <Row>
+                            <Col>
+                            <Button ref={target} onClick={() => toggleShow()}>Casting Modifier </Button>
+                            <Overlay target={target.current} show={show} placement="top">
+                                <Tooltip id="overlay-castingMod">
+                                    Each spellcasting class uses a different ability to cast their spells.
+                                </Tooltip>
+                            </Overlay>
+                            </Col>
+                            
+                        </Row>
+                        <Row>
+                            <Col></Col>
+                            <Col>
+                            <h5>{classInfo}</h5>
+                            </Col>
+                            <Col></Col>
+                        </Row>
+                    </Container>
+                </Col>
+               
+            
+            </Row>
+            
+            <Row className="CharacterProfile-ability-scores">
+                <Col>
+                <AbilityScoreCard className="CharacterProfile-info" ability="Strength" score={currentCharacter.strength} />
+                </Col>
+                <Col>
+                <AbilityScoreCard className="CharacterProfile-info" ability="Dexterity" score={currentCharacter.dexterity} />
+                </Col>
+                <Col>
+                <AbilityScoreCard className="CharacterProfile-info" ability="Constitution" score={currentCharacter.constitution} />
+                </Col>
+                <Col>
+                <AbilityScoreCard className="CharacterProfile-info" ability="Intelligence" score={currentCharacter.intelligence} />
+                </Col>
+                <Col>
+                <AbilityScoreCard className="CharacterProfile-info" ability="Wisdom" score={currentCharacter.wisdom} />
+                </Col>
+                <Col>
+                <AbilityScoreCard className="CharacterProfile-info" ability="Charisma" score={currentCharacter.charisma} />
+                </Col>
+            </Row>
          {showEdit === true &&
             <div className="CharacterProfile-editForm">
                 <CharacterEditForm character={currentCharacter} toggleEdit={toggleEdit} editCharacter={editCharacter}/>
@@ -86,14 +154,7 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
             </div>
           }
 
-            <div className="CharacterProfile-ability-scores">
-                <AbilityScoreCard className="CharacterProfile-info" ability="Strength" score={currentCharacter.strength} />
-                <AbilityScoreCard className="CharacterProfile-info" ability="Dexterity" score={currentCharacter.dexterity} />
-                <AbilityScoreCard className="CharacterProfile-info" ability="Constitution" score={currentCharacter.constitution} />
-                <AbilityScoreCard className="CharacterProfile-info" ability="Intelligence" score={currentCharacter.intelligence} />
-                <AbilityScoreCard className="CharacterProfile-info" ability="Wisdom" score={currentCharacter.wisdom} />
-                <AbilityScoreCard className="CharacterProfile-info" ability="Charisma" score={currentCharacter.charisma} />
-            </div>
+            
 
             <button onClick={handleEdit}>Edit</button>
             <button onClick={handleDelete}>Delete Character</button>
@@ -112,7 +173,7 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
             </div>
 
 
-        </div>
+        </Container>
         </CurrentCharacterContext.Provider>
 
     )

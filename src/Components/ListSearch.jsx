@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 
+import { Container, Row, Col, Button } from 'react-bootstrap';
+
 import "./ListSearch.css"
 
-const ListSearch = ({getTerm}) => {
+const ListSearch = ({getSearchTerm, getTerm}) => {
 
     const [classSearch, setClass] = useState('');
     const [level, setLevel] = useState('')
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleClassChange = (e) => {
         e.preventDefault();
         setClass(e.target.value)
+    }
+
+    const handleSearchTerm = (e) => {
+        e.preventDefault();
+        setSearchTerm(e.target.value);
+        getSearchTerm(searchTerm.toLowerCase());
     }
 
     const handleLevelChange = (e) => {
@@ -21,9 +30,11 @@ const ListSearch = ({getTerm}) => {
         getTerm(classSearch, level)
     }
     return (
-        <div className="ListSearch">
+        <Container className="ListSearch">
             <form>
-                <label>Select a class: </label>
+                <Row>
+                <Col>
+                <Button>Select Class</Button>
                 <select value={classSearch} onChange={handleClassChange}>
                     <option key="all" value="">All</option>
                     <option key="bard" value="bard">Bard</option>
@@ -35,7 +46,10 @@ const ListSearch = ({getTerm}) => {
                     <option key="warlock" value="warlock">Warlock</option>
                     <option key="wizard" value="wizard">Wizard</option>
                 </select>
-                <label>Level: </label>
+                </Col>
+                
+                <Col>
+                <Button>Select Level</Button>
                 <select value={level} onChange={handleLevelChange}>
                     <option key="level-all" value="">All</option>
                     <option key="level-0" value="0">0</option>
@@ -49,11 +63,27 @@ const ListSearch = ({getTerm}) => {
                     <option key="level-8" value="8">8</option>
                     <option key="level-9" value="9">9</option>
                 </select>
-                <button onClick={handleSubmit}>Search</button>
+                </Col>
+                </Row>
+                <Button onClick={handleSubmit}>Search</Button>
+
+                <Row>
+                    <Col></Col>
+                    <Col xs={7}>
+                        <input
+                            type="text"
+                            name="term"
+                            value={searchTerm}
+                            onChange={handleSearchTerm}
+                            placeholder="Search for a specific spell"
+                        />
+                    </Col>
+                    <Col></Col>
+                </Row>
             </form>
             
 
-        </div>
+        </Container>
     )
 }
 

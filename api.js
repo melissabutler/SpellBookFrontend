@@ -67,6 +67,12 @@ class SpellBookApi {
         return res.data;
     }
 
+    /**GET Individual class data */
+    static async getClass(classIdx) {
+        let res = await axios.get(`${DND_BASE_URL}/classes/${classIdx}`);
+        return res;
+    }
+
     /** ////////////////////////////// USER ROUTES */
 
     /** Register a user */

@@ -1,19 +1,13 @@
 .CharacterCard {
-    height: 100px;
-    width: 50%;
     color: black;
-    text-decoration: none;
-    font-size: 22px;
-    list-style: none;
-    background-color: green;
-    margin: auto;
-    margin-top: 20px;
+    background-color: white;
+    margin: 20px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
 
 }
 
-
-ul {
-list-style: none;
+h3 {
+    padding: 10px;
+    margin: 10px;
 }

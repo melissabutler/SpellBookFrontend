@@ -1,13 +1,20 @@
 .ListSearch {
-    text-align: center;
+    background-color: grey;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
 }
 
-input {
-    margin: 1rem;
-    width: 50vw;
-    padding: 1rem;
+.ListSearch Button {
+    margin: 10px;
+    background-color: darkslategray;
+    font-size: 20px;
 }
-button {
-    margin: 20px;
-    float: none;
+
+.ListSearch Button:hover {
+    background-color: darkslategrey;
+}
+
+.ListSearch input {
+    width: 100%;
 }

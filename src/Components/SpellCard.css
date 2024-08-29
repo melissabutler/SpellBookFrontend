@@ -1,79 +1,87 @@
 .SpellCard {
+    color: black;
     margin: auto;
     background-color: red;
     border-radius: 10px;
-    width: 100vw;
-    height: 100vh;
+    width: inherit;
+    height: inherit;
+    color: black;
 }
 
-/* .SpellCard-details { */
-    /* display: inline-block; */
-/* } */
-
 .SpellCard-content {
-    width: 90vw;
-    align-items: center;
-    display: inline-block;
     background-color: darkred;
+    padding: 20px;
 }
 
 .SpellCard-title {
-    display: inline-block;
-    width: 30rem;
     padding: 20px;
     margin: 20px;
     background-color: white;
     border-radius: 10px;
     color: black;
-    /* place-content: center; */
+    font-size: inherit;
+    text-align: center;
 }
 
 .SpellCard-title-name {
-    float: left;
-    font-size: 20px;
     font-weight: bold;
 }
-.SpellCard-title-school {
-    float: right;
-    font-size: 20px;
+
+.SpellCard-description {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 10px;
+}
+
+.SpellCard-higherLevel {
+    text-align: center;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 10px;
+}
+
+.SpellCard-higherLevel Button {
+    background-color: darkslategray;
 }
 
 .SpellCard-damage {
-    /* padding: 20px; */
-    margin: 20px;
+    /* margin: 20px;
+    padding: 30px; */
     height: 500px;
+    color: black;
     background-color: rgb(65, 0, 0);
+    text-align: center;
+    place-content: center;
 }
 
 .SpellCard-damage-big {
-    float: left;
-    width: 50%;
-    height: 100%;
-    float: left;
-    /* background-color: pink; */
+    /* width: 100%; */
+    /* height: 100%; */
     place-content: center;
 }
 
 .SpellCard-damage-big .SpellCard-info {
-    /* width: 50%; */
-    margin: auto;
-    margin-top: 10px;
+    height: 200px;
+    width: 100%;
+    padding: 20px;
 }
-
+ 
 .SpellCard-damage-small {
-    /* background-color: rgb(177, 177, 81); */
-    width: 50%;
+    /* width: 50px; */
     height: 100%;
     float: right;
     place-content: center;
-}
+} 
 .SpellCard-damage-small .SpellCard-info{
-    height: 50px;
-    padding: 5px;
-    margin: auto;
-    margin-top: 5px;
+    width: 100%;
+    text-align: left;
+    height: 60px;
+    margin: 10px;
 }
-
 
 .SpellCard-info {
     width: 200px;
@@ -82,27 +90,31 @@
     background-color: white;
     color: black;
     border-radius: 10px;
-    margin: 20px;
+    /* margin: 20px; */
+    /* padding: 10px; */
+}  
+.SpellCard-info Button {
+    background-color: darkslategray;
     padding: 10px;
-    /* display: inline-block; */
+    /* margin: 10px; */
+}
+
+.SpellCard-info h6 {
+    margin: .75rem;
+}
+
+.SpellCard-info Button:hover {
+    background-color: black;
 }
 /* Total width/height with padding:  240px */
 
-.SpellCard-description {
-    width: 75vw;
-    margin: auto;
-    place-content: center;
-    background-color: white;
-    color: black;
-    border-radius: 10px;
-    padding: 30px;
-}
+/* 
 
 .level-select {
     width: 50px;
     height: 50px;
     font-size: 12px;
-}
+} */
 /* 
 .tooltip {
     position: relative;

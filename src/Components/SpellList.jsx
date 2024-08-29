@@ -6,6 +6,11 @@ import SpellBookApi from "../../api.js"
 
 import ListSearch from "./ListSearch.jsx";
 import SpellCard from "./SpellCard.jsx";
+import SpellLink from "./SpellLink.jsx";
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import "./SpellList.css"
 
@@ -14,6 +19,7 @@ const SpellList = () => {
     const [spells, setSpells] = useState([]);
     const [classSearch, setClass] = useState("");
     const [level, setLevel] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
 
     /** On change of search terms, page change to show un/filtered list of spells. */
     useEffect ( () => {
@@ -52,22 +58,48 @@ const SpellList = () => {
         setLevel(getLevel);
     }
 
+    const getSearchTerm = (newTerm) => {
+        setSearchTerm(newTerm)
+    }
+
+    const filteredData = spells.filter((spell) => {
+        if(searchTerm === "") {
+            return spell;
+        } else {
+            return spell.name.toLowerCase().match(searchTerm)
+        }
+    })
+
     return (
-        <div className="SpellList">
-            <h1 className="SpellList-title">Spell List</h1>
-            <div className="SpellList-search">
-                <ListSearch getTerm={getTerm}/>
-            </div>
-            <div className="SpellList-list">
-                {spells.map(spell => (
-                    <Link className="SpellList-Link" key={spell.index} to={`/spells/${spell.index}`}>
-                        <SpellCard key={spell.index} spellIdx={spell.index} details={false}/>
-                    </Link>
-                        
-                ))}
-            </div>
+        <Container className="SpellList">
+            <Row>
+                <Col></Col>
+                <Col>
+                <h1 className="SpellList-title">Spell List</h1>
+                </Col>
+                <Col></Col>
+                
+            </Row>
             
-        </div>
+            <Row className="SpellList-search">
+                <Col></Col>
+                <Col xs={7}>
+                    <ListSearch className="SpellList-search-select" getSearchTerm={getSearchTerm} getTerm={getTerm}/>
+                </Col>
+                <Col></Col>
+            </Row>
+            <Row className="SpellList-list">
+                <Col></Col>
+                <Col>
+                {filteredData.map(spell => (
+                    <SpellLink key={spell.index} spell={spell} />
+                ))}
+                </Col>
+                <Col></Col>
+                
+            </Row>
+            
+        </Container>
     )
 }
 

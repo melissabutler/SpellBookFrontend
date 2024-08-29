@@ -1,33 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 
-import "./Tooltip.css"
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Overlay from 'react-bootstrap/Overlay'
+import Button from 'react-bootstrap/Button'
+import Tooltip from 'react-bootstrap/Tooltip'
+
+import useToggle from "../Hooks/useToggleState"
+
+// import "./Tooltip.css"
 
 const SpellCardInfo = ({spellInfo, title, altText, small}) => {
 
+    const [show, toggleShow] = useToggle(false)
+    const target = useRef(null)
+
+
+
     return(
-        <div className={`SpellCard-info ${spellInfo}`}
-            name={`${spellInfo}`}
+        <Row className={`SpellCard-info ${spellInfo}`} name={`${spellInfo}`}
             >
                 {small ? 
-                <div className="tooltip">
-                    {title}: {spellInfo}
-                    <div className="tooltip-text">
-                        {altText}
-                    </div>
-                </div>
+                <Col>
+                    <Row>
+                        <Col xs="4">
+                            <Button ref={target} onClick={() => toggleShow()}>{title}:</Button>
+                        </Col>
+                        <Col>
+                            <h6>{spellInfo}</h6>
+                        </Col>
+                        
+                    <Overlay target={target.current} show={show} placement="top">
+                        <Tooltip id="overlay-altText">
+                            {altText}
+                        </Tooltip>
+                    </Overlay> 
+                    </Row>
+                    
+                </Col>
                 :
-                <div className="tooltip">
-                <h4>{title}</h4>
-                <h5>{spellInfo}</h5>
-                <div className="tooltip-text">
-                    {altText}
-                </div>
-
-                </div>
-}
+                <Col>
+                    <Col>
+                        <Button ref={target} onClick={() => toggleShow()}>{title}</Button>
+                    </Col>
+                    <Col>
+                        <h6>{spellInfo}</h6>
+                    </Col>
+                
+                    <Overlay target={target.current} show={show} placement="top">
+                        <Tooltip id="overlay-altText">
+                            {altText}
+                        </Tooltip>
+                        
+                    </Overlay>
+                </Col>}
                 
 
-        </div>
+        </Row>
     )
 }
 

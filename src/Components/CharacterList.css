@@ -1,4 +1,24 @@
 .CharacterList {
     text-align: center;
     align-items: center;
+    background-color: lightblue;
+}
+
+.CharacterList-CreateCharacter {
+    background-color: blue;
+}
+.CharacterList-CreateCharacter a {
+    color: white;
+}
+
+.CharacterList-CreateCharacter a:hover {
+    color: black;
+}
+
+.CharacterList-CreateCharacter h3 {
+    background-color: darkblue;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+
 }

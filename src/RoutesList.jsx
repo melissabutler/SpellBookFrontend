@@ -29,6 +29,7 @@ const RoutesList = ({login,
                         deleteCharacter,
                         assignSpell,
                         unassignSpell,
+                        getClass
 }) => {
     const currentUser = useContext(CurrentUserContext)
 
@@ -77,6 +78,7 @@ const RoutesList = ({login,
                                                             editCharacter={editCharacter} 
                                                             deleteCharacter={deleteCharacter}
                                                             unassignSpell={unassignSpell}
+                                                            getClass={getClass}
                     />) : <Navigate replace to="/"/>}
                 /> 
 

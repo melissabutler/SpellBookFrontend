@@ -6,6 +6,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 import SpellBookApi from "../../api";
 import CurrentCharacterContext from "../currentCharacterContext";
 
+
+import { Container, Row, Col, Button, Overlay, Tooltip } from 'react-bootstrap';
+
 const CharacterEditForm = ({editCharacter, toggleEdit}) => {
     const navigate = useNavigate();
     let character = useContext(CurrentCharacterContext)
@@ -53,29 +56,29 @@ const CharacterEditForm = ({editCharacter, toggleEdit}) => {
      }
 
     return (
-        <div className="CharacterForm">
-            <h1>Edit Character</h1>
-            <form className="CharacterForm-form" onSubmit={handleSubmit}>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label">Character Name</label>
-                    </div>
-                    <input
-                        className="CharacterForm-input"
-                        id="char_name"
-                        name="char_name"
-                        type="text"
-                        value={formData.char_name}
-                        onChange={handleChange}
-                        placeholder="Character Name"
-                    />
-                </div>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="char_class">Character Class</label>
-                    </div>
+        <Container className="CharacterForm">
+            <Row>
+                <h1>Edit Character</h1>
+            </Row>
+             <form className="CharacterForm-form" onSubmit={handleSubmit}>
+            <Row>
+                    <Col className="CharacterForm-section">
+                        <h5 className="CharacterForm-h4">Character Name</h5>
+                    
+                        <input
+                            className="CharacterForm-input"
+                            id="char_name"
+                            name="char_name"
+                            type="text"
+                            value={formData.char_name}
+                            onChange={handleChange}
+                            placeholder="Character Name"
+                        />
+                    </Col>
+                    
+                    <Col className="CharacterForm-section">
+                        <h5 className="CharacterForm-h4" htmlFor="char_class">Character Class</h5>
+                   
                     <select id="char_class" value={formData.char_class} name="char_class" onChange={handleChange}>
                         <option key="placeholder" value="">Select a class</option>
                         <option key="bard" value="bard">Bard</option>
@@ -87,83 +90,70 @@ const CharacterEditForm = ({editCharacter, toggleEdit}) => {
                         <option key="warlock" value="warlock">Warlock</option>
                         <option key="wizard" value="wizard">Wizard</option>
                     </select>
-                </div>
+                    </Col>
+                    <Col className="CharacterForm-section">
+                        <h5 className="CharacterForm-h4" htmlFor="lvl">Character Level</h5>
+                        
+                        <select id="lvl" value={formData.lvl} name="lvl" onChange={handleChange}>
+                            <option key="placeholder" value="">Level</option>
+                            {statRange}
+                        </select>
+                    </Col>
+            </Row>
 
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="lvl">Character Level</label>
-                    </div>
-                <select id="lvl" value={formData.lvl} name="lvl" onChange={handleChange}>
-                    <option key="placeholder" value="">Level</option>
-                    {statRange}
-                </select>
-                </div>
-{/* 
-             ABILITY SCORES ///////////////////// */}
-            <div className="CharacterForm-section-ability">
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="strength">Strength</label>
-                    </div>
-                <select value={formData.strength} name="strength" onChange={handleChange}>
+            <Row className="CharacterForm-section-ability">
+                <Col className="CharacterForm-section">
+                        <h4 className="CharacterForm-h4" htmlFor="strength">Strength</h4>
+                <select className="ability-score" value={formData.strength} name="strength" onChange={handleChange}>
                     <option key="placeholder" value="">STR</option>
                     {statRange}
                 </select>
-                </div>
+                </Col>
 
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="dexterity">Dexterity</label>
-                    </div>
-                <select value={formData.dexterity} name="dexterity" onChange={handleChange}>
+                <Col className="CharacterForm-section">
+                        <h4 className="CharacterForm-h4" htmlFor="dexterity">Dexterity</h4>
+                <select className="ability-score" value={formData.dexterity} name="dexterity" onChange={handleChange}>
                     <option key="placeholder" value="">DEX</option>
                     {statRange}
                 </select>
-                </div>
+                </Col>
 
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="constitution">Constitution</label>
-                    </div>
-                <select value={formData.constitution} name="constitution" onChange={handleChange}>
+                <Col className="CharacterForm-section">
+                        <h4 className="CharacterForm-h4" htmlFor="constitution">Constitution</h4>
+                <select className="ability-score" value={formData.constitution} name="constitution" onChange={handleChange}>
                     <option key="placeholder" value="">CON</option>
                     {statRange}
                 </select>
-                </div>
+                </Col>
 
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="intelligence">Intelligence</label>
-                    </div>
-                <select value={formData.intelligence} name="intelligence" onChange={handleChange}>
+                <Col className="CharacterForm-section">
+                        <h4 className="CharacterForm-h4" htmlFor="intelligence">Intelligence</h4>
+                <select className="ability-score" value={formData.intelligence} name="intelligence" onChange={handleChange}>
                     <option key="placeholder" value="">INT</option>
                     {statRange}
                 </select>
-                </div>
+                </Col>
 
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="wisdom">Wisdom</label>
-                    </div>
-                <select value={formData.wisdom} name="wisdom" onChange={handleChange}>
+                <Col className="CharacterForm-section">
+                        <h4 className="CharacterForm-h4" htmlFor="wisdom">Wisdom</h4>
+                <select className="ability-score" value={formData.wisdom} name="wisdom" onChange={handleChange}>
                     <option key="placeholder" value="">WIS</option>
                     {statRange}
                 </select>
-                </div>
+                </Col>
 
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="charisma">Charisma</label>
-                    </div>
-                <select value={formData.charisma} name="charisma" onChange={handleChange}>
+                <Col className="CharacterForm-section">
+                        <h4 className="CharacterForm-h4" htmlFor="charisma">Charisma</h4>
+                <select className="ability-score" value={formData.charisma} name="charisma" onChange={handleChange}>
                     <option key="placeholder" value="">CHA</option>
                     {statRange}
                 </select>
-                </div>
-            </div>
+                </Col>
+           
+            </Row>
             <button>Submit</button>
             </form>
-        </div>
+        </Container>
     )
     
 

@@ -10,7 +10,8 @@ import NavBar from './Components/NavBar';
 import SpellBookApi from '../api';
 import useLocalStorage from './Hooks/useLocalStorage';
 
-import './App.css'
+// import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [token, setToken] = useLocalStorage("token", null);
@@ -97,7 +98,6 @@ async function getCharacter(char_id) {
   try {
     // console.log("in app token", token)
     let res = await SpellBookApi.getCharacter(token, char_id)
-    console.log("in app", res)
     return res;
   } catch(err) {
     alert(err);
@@ -129,7 +129,6 @@ async function deleteCharacter(char_id) {
 /** When spell is assigned to character, call API to update character */
 async function assignSpell(spellIdx, char_id){
   try {
-    console.log("in app", spellIdx, char_id)
     let res = await SpellBookApi.assignSpell(spellIdx, token, char_id)
   } catch(err) {
     alert(err);
@@ -139,7 +138,15 @@ async function assignSpell(spellIdx, char_id){
 async function unassignSpell(spellIdx, char_id){
   try {
     let res = await SpellBookApi.unassignSpell(spellIdx, token, char_id)
-    // console.log("unassign spell called", spellIdx, char_id)
+  } catch(err) {
+    alert(err);
+  }
+}
+
+async function getClass(classIdx) {
+  try {
+    let res = await SpellBookApi.getClass(classIdx)
+    return res;
   } catch(err) {
     alert(err);
   }
@@ -160,7 +167,8 @@ async function unassignSpell(spellIdx, char_id){
                       editCharacter={editCharacter} 
                       deleteCharacter={deleteCharacter} 
                       assignSpell={assignSpell}
-                      unassignSpell={unassignSpell}/>
+                      unassignSpell={unassignSpell}
+                      getClass={getClass}/>
         </BrowserRouter>
       </CurrentUserContext.Provider>
     </div>

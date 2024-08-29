@@ -1,9 +1,8 @@
 .AbilityScoreCard {
-    width: 150px;
-    height: 130px;
-    background-color: blue;
-    border-radius: 20px;
-    place-content: center;
-    display: inline-block;
+
+    background-color: slategray;
+    border-radius: 10px;
     margin: 10px;
+    padding: 10px;
+    text-align: center;
 }

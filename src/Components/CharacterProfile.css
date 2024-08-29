@@ -1,10 +1,18 @@
-.CharacterProfile {
-    /* display: inline-block; */
-    margin: auto;
-    align-items: center;
+.CharacterProfile-castingMod {
+    text-align: center;
+    background-color: slategray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+
 }
 
-.CharacterProfile-info{
-    display: inline-block;
-    place-content: center;
+
+
+.CharacterProfile-castingMod Button {
+    background-color: rgb(205, 205, 205);
+    color: black;
+    font-weight: bold;
+    margin: 10px;
+    padding: 10px
 }

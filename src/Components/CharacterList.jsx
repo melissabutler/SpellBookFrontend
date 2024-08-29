@@ -2,7 +2,12 @@ import React, { useEffect, useContext, useState } from "react";
 import CurrentUserContext from "../currentUserContext";
 import { Link } from "react-router-dom";
 
+
+import { Container, Row, Col, Button } from 'react-bootstrap';
+
 import CharacterCard from "./CharacterCard";
+
+import "./CharacterList.css"
 
 const CharacterList = () => {
     let currentUser = useContext(CurrentUserContext);
@@ -19,24 +24,38 @@ const CharacterList = () => {
 
     return (
         
-        <div className="CharacterList">
+        <Container className="CharacterList">
             
-            
-            <h1>My Characters</h1>
-            <ul className="CharacterList-list">
+            <Row>
+                <Col>
+                    <h1>My Characters</h1>
+                </Col>
+                
+            </Row>
+            <Row>
+                <Col></Col>
+            <Col xs={7}>
                 {characters.map(character => (
                     <Link key={character.id} to={`/characters/${character.id}`}>
-                        <li className="CharacterList-character" key={character.id}>
                             <CharacterCard key={character.id} character={character}/>
-                        </li>
                     </Link>
                   ))}
              
-            </ul>
-            <div className="CharacterList-CreateCharacter">
-                <Link className="CharacterList-CreateCharacterLink" to="/characters/create">Create a new Character</Link>
-            </div>
-        </div>
+            </Col>
+            <Col></Col>
+            </Row>
+            
+            
+            <Row className="CharacterList-CreateCharacter">
+                <Col></Col>
+                <Col>
+                    <Link className="CharacterList-CreateCharacterLink" to="/characters/create">
+                    <h3>Create a new character!</h3>
+                    </Link>
+                </Col>
+                <Col></Col>
+            </Row>
+        </Container>
     )
 }
 

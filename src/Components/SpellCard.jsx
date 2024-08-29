@@ -3,13 +3,18 @@ import React, { useContext, useEffect, useState } from "react";
 import CurrentUserContext from "../currentUserContext";
 import SpellBookApi from "../../api";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+
 import AssignSpellForm from "./AssignSpellForm";
 import SpellCardInfo from "./SpellCardInfo";
+import SpellCardDamage from "./SpellCardDamage";
 
-import useToggle from "../Hooks/useToggleState"
 
 import "./SpellCard.css"
-import SpellCardDamage from "./SpellCardDamage";
+
 
 const SpellCard = ({assignSpell, 
                     spellIdx, 
@@ -32,7 +37,6 @@ const SpellCard = ({assignSpell,
     useEffect ( () => {
         async function getSpell() {
           let spell = await SpellBookApi.getSpellDetails(spellIdx);
-          console.log(spell)
 
           if (spell.area_of_effect) {
           setAoe(spell.area_of_effect.size + " ft " + spell.area_of_effect.type)}
@@ -72,105 +76,103 @@ const SpellCard = ({assignSpell,
 
   return (
     <div className="SpellCard">
-      <div className="SpellCard-content">
-        <div className="SpellCard-title">
-          <div className="SpellCard-title-name">{spell.name}</div>
+      <Container className="SpellCard-content">
+        <Row className="SpellCard-title">
+          <Col className="SpellCard-title-name">{spell.name}</Col>
           {cantrip ? 
-          <div className="SpellCard-title-school">School of {school} Cantrip</div> 
-          : <div className="SpellCard-title-school">Level {spell.level} School of {school} Spell</div>}
+          <Col className="SpellCard-title-school">School of {school} Cantrip</Col> 
+          : <Col className="SpellCard-title-school">Level {spell.level} School of {school} Spell</Col>}
 
-        </div>
+        </Row>
         
          {details === true && 
 
-         <div className="SpellCard-details">
+         <Container className="SpellCard-details">
 
-          <div className="SpellCard-description">
-              <p>{spell.desc}</p>
-            </div>
+          <Row className="SpellCard-description">
+            <Col></Col>
+            <Col xs={7}><p>{spell.desc}</p></Col>
+            <Col></Col>
+          </Row>
 
-            <div className="SpellCard-damage">
+          {spell.higher_level != 0 ?
+            <Row className="SpellCard-higherLevel">
+              <Col></Col>
+              <Col xs={7}>
+                <Button>Higher Level</Button>
+                <p>{higherLevel}</p>
+              </Col>
+              <Col></Col>
+            </Row>
+               : ""}
+          
+          <Row className="SpellCard-damage">
 
-              <div className="SpellCard-damage-big">
-            
-
-              {spell.damage ? 
-              <div className="SpellCard-damage-base">
-              <SpellCardInfo  spellInfo={baseDamage} title="Base Damage" altText="What kind of damage does the spell do at base?"/> 
-              </div>
-              : ""}
-              
-              {levels != "" ? 
-              <div className="SpellCard-damage-base">
-                <SpellCardDamage dmgLevels={levels} damage={spell.damage} source={charOrSlot}/> 
-                </div>
+            {spell.damage ?
+            <Col className="SpellCard-damage-big">
+              <Row>
+                {spell.damage ? 
+                <Col  className="SpellCard-damage-base">
+                <SpellCardInfo  spellInfo={baseDamage} title="Base Damage" altText="What kind of damage does the spell do at base?"/> 
+                </Col>
                 : ""}
-              </div>
-
-              <div className="SpellCard-damage-small">
-                  {spell.attack_type ?
-                  <div className="SpellCard-damage-attack-type">
-                  <SpellCardInfo className="SpellCard-damage-attack-type" spellInfo={spell.attack_type} title="Attack Type" altText="Is the spell considered a ranged/melee attack?" /> 
-                  </div>
+                
+                {levels != "" ? 
+                <Col className="SpellCard-damage-base">
+                  <SpellCardDamage dmgLevels={levels} damage={spell.damage} source={charOrSlot}/> 
+                  </Col>
                   : ""}
-
-                  {spell.dc ? 
-                  <div className="SpellCard-damage-attack-type">
-                  <SpellCardInfo className="SpellCard-damage-attack-type" small={true} spellInfo={dc} title="Spell DC" altText="What type of save does the target have to make against your spell?" />
-                  </div>
-                    : ""}
-
-                    {spell.range ?
-                    <SpellCardInfo spellInfo={spell.range}  small={true} title="Range" altText="How far away can you cast the spell?" /> : ""}
-
-                    {spell.area_of_effect ?
-                    <SpellCardInfo spellInfo={aoe}  small={true} title="Area of Effect" altText="What size and shape is the spell effect?" /> : ""}
-                    
-                    {spell.duration ?
-                    <SpellCardInfo spellInfo={spell.duration}  small={true} title="Duration" altText="How long does the spell last?" /> : ""}
+              </Row>
+            </Col>
+            : ""}
             
-
-                  {spell.casting_time ?
-                  <SpellCardInfo spellInfo={spell.casting_time} small={true}  title="Casting Time" altText="How long does it take to cast the spell?" /> : ""}
-
-                  {spell.components ? 
-                  <SpellCardInfo spellInfo={spell.components} small={true} title="Components" altText="What does the spell require? Verbal, Somatic, and/or Material?"/> : "" }
-
-                  {spell.material ?
-                  <SpellCardInfo spellInfo={spell.material} small={true} title="Materials" altText="Does the spell require materials to cast?" /> : ""}
-
-              </div>
-
-
-             
-
-              {/* {spell.higher_level != 0 ?
-              <div className="SpellCard-description">
-                <h3>Higher Level</h3> 
-              <p>{spell.higher_level}</p>
-              </div> : "" } */}
-              {/* // <SpellCardInfo spellInfo={higherLevel} title="Higher Level" altText="Some spells can be cast using a higher level spell slot. What are the changes?"/> : ""} */}
+                  
+            <Col className="SpellCard-damage-small">
               
+                {spell.attack_type ?
+                <SpellCardInfo small={true} spellInfo={spell.attack_type} title="Attack Type" altText="Is the spell considered a ranged/melee attack?" /> : ""}
+
+                {spell.dc ? 
+                <SpellCardInfo small={true} spellInfo={dc} title="Spell DC" altText="What type of save does the target have to make against your spell?" /> : ""}
+            
+                {spell.range ?
+                <SpellCardInfo spellInfo={spell.range}  small={true} title="Range" altText="How far away can you cast the spell?" /> : ""}
+
+                {spell.area_of_effect ?
+                <SpellCardInfo spellInfo={aoe}  small={true} title="Area of Effect" altText="What size and shape is the spell effect?" /> : ""}
+                
+                {spell.duration ?
+                <SpellCardInfo spellInfo={spell.duration}  small={true} title="Duration" altText="How long does the spell last?" /> : ""}
+          
+
+                {spell.casting_time ?
+                <SpellCardInfo spellInfo={spell.casting_time} small={true}  title="Casting Time" altText="How long does it take to cast the spell?" /> : ""}
+
+                {spell.components ? 
+                <SpellCardInfo spellInfo={spell.components} small={true} title="Components" altText="What does the spell require? Verbal, Somatic, and/or Material?"/> : "" }
+
+                {spell.material ?
+                <SpellCardInfo spellInfo={spell.material} small={true} title="Materials" altText="Does the spell require materials to cast?" /> : ""}
+
+            </Col>
+
+          
               
-            </div>
+          </Row>
 
-             
-             
-           
-            
-            {/* {spell.higher_level ?
-             <SpellCardInfo spellInfo={spell.higher_level} title="Higher Level" altText="If cast at a higher level, what are the effects?" /> : ""} */}
+          {!currentUser || charProfile === false &&
+            <Row>
+              <Col>
+              <AssignSpellForm assignSpell={assignSpell} spellIdx={spellIdx}/>
+              </Col>
+              
+            </Row>}
+    
+          </Container>}
 
-            
-            
-            
-        </div>}
-
-      
-        {!currentUser || charProfile === false &&
-        <AssignSpellForm assignSpell={assignSpell} spellIdx={spellIdx}/>
-        }
-        </div>
+     
+        
+      </Container>
           
         
     
