@@ -1,8 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import useFields from "../Hooks/useFields";
 import CurrentUserContext from "../currentUserContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import "./Form.css"
+
+import { Col, Row, Container } from 'react-bootstrap';
 
 const ProfileEditForm = ({editUser}) => {
     const navigate = useNavigate();
@@ -23,22 +27,45 @@ const ProfileEditForm = ({editUser}) => {
     }
 
     return(
-        <div className="EditForm">
-            <h2>Update User Email</h2>
-            <form className="EditForm-form" onSubmit={handleSubmit}>
-                <label htmlFor="email" className="EditForm-label">Email</label>
-                <input
-                    className="EditForm-input"
+        <Container className="Form">
+            <Row>
+                <h2>Update User Email</h2>
+            </Row>
+            
+            <form className="Form-form" onSubmit={handleSubmit}>
+                <Row>
+                    <Col></Col>
+                    <Col>
+                   <label htmlFor="email" className="Form-label">Email</label> 
+                   </Col>
+                   <Col></Col>
+                </Row>
+                <Row>
+                    <input
+                    className="Form-input"
                     id="email"
                     name="email"
                     type="text"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email Address"
-                    />
-                <button>Submit</button>
+                    /> 
+                   
+                </Row>
+                
+         
+                <Row>
+                    <Col></Col>
+                    <Col>
+                    <button>Submit</button>
+                    </Col>
+                    <Col></Col>
+                    
+                </Row>
+                
+                
             </form>
-        </div>
+        </Container>
     )
      }
 

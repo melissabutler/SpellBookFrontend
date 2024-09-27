@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 import useFields from "../Hooks/useFields";
-import CurrentUserContext from "../currentUserContext";
-import { Navigate, useNavigate } from "react-router-dom";
-import SpellBookApi from "../../api";
 import CurrentCharacterContext from "../currentCharacterContext";
 
 
-import { Container, Row, Col, Button, Overlay, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
-const CharacterEditForm = ({editCharacter, toggleEdit}) => {
+const CharacterEditForm = ({editCharacter, toggleEdit, handleEdit}) => {
     const navigate = useNavigate();
     let character = useContext(CurrentCharacterContext)
     let { id }= useParams();
@@ -45,6 +43,7 @@ const CharacterEditForm = ({editCharacter, toggleEdit}) => {
         toggleEdit();
     }
 
+
      /** This piece condenses the options list for numeric stats, in this case character level and ability scores.
      * As they both are a range from 1-20, they can share this list. 
     */
@@ -60,7 +59,7 @@ const CharacterEditForm = ({editCharacter, toggleEdit}) => {
             <Row>
                 <h1>Edit Character</h1>
             </Row>
-             <form className="CharacterForm-form" onSubmit={handleSubmit}>
+             <form className="CharacterForm-form" >
             <Row>
                     <Col className="CharacterForm-section">
                         <h5 className="CharacterForm-h4">Character Name</h5>
@@ -86,7 +85,7 @@ const CharacterEditForm = ({editCharacter, toggleEdit}) => {
                         <option key="druid" value="druid">Druid</option>
                         <option key="paladin" value="paladin">Paladin</option>
                         <option key="ranger" value="ranger">Ranger</option>
-                        <option key="sorceror" value="sorceror">Sorceror</option>
+                        <option key="sorcerer" value="sorcerer">Sorcerer</option>
                         <option key="warlock" value="warlock">Warlock</option>
                         <option key="wizard" value="wizard">Wizard</option>
                     </select>
@@ -151,8 +150,10 @@ const CharacterEditForm = ({editCharacter, toggleEdit}) => {
                 </Col>
            
             </Row>
-            <button>Submit</button>
+            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={handleEdit}>Hide Edit</button>
             </form>
+            
         </Container>
     )
     

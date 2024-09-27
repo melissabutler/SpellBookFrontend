@@ -10,25 +10,32 @@ import useToggle from "../Hooks/useToggleState";
 import useLocalStorage from "../Hooks/useLocalStorage";
 import SpellCard from "./SpellCard";
 import AbilityScoreCard from "./AbilityScoreCard";
+import InfoWidget from "./WidgetInfo.jsx";
 
+import abilityscores from "../Modifier.jsx"
+import abilities from "../Abilities.jsx"
+import proficiencybonus from "../ProficiencyBonus.jsx"
 
-import { Container, Row, Col, Button, Overlay, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
-import SpellCardInfo from "./SpellCardInfo";
 
 import "./CharacterProfile.css"
 
-const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassignSpell, getClass}) => {
+
+const CharacterProfile = ({getCharacter, 
+                            editCharacter, 
+                            deleteCharacter, 
+                            unassignSpell, 
+                            getClass}) => {
     const [currentCharacter, setCurrentCharacter] = useLocalStorage("currentCharacter", {})
     const [showEdit, toggleEdit] = useToggle(false)
     const [showDesc, toggleDesc] = useToggle(false)
     const [change, toggleChange] = useToggle(true)
     const [spells, setSpells] = useState([])
     const [classInfo, setClassInfo] = useState([])
-
-    const [show, toggleShow] = useToggle(false)
-    const target = useRef(null)
-
+    const [classRef, setClassRef] = useState("")
+    const [castingMod, setCastingMod] = useState("");
+    const [profBonus, setProfBonus] = useState("")
 
     let { id } = useParams();
    
@@ -39,20 +46,23 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
         async function getData() { 
             let data = await getCharacter(id)
             setCurrentCharacter({...data})
-            setSpells([...currentCharacter.spells])
-            toggleChange();
+            setSpells([...data.spells])
         }
         
         getData();
     }, [])
 
     useEffect (() => {
-        async function getData() {
+        async function getClassData() {
             let data = await getClass(currentCharacter.char_class)
             setClassInfo(data.data.spellcasting.spellcasting_ability.name)
+            
+            setProfBonus(proficiencybonus[currentCharacter.lvl])
         }
-        getData()
+        getClassData()
     }, [currentCharacter])
+
+
     
 
     /** When Edit status toggles, update character  */
@@ -66,6 +76,9 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
     }, [showEdit])
 
     let charClass = currentCharacter.char_class[0].toUpperCase() + currentCharacter.char_class.slice(1)
+    let charClassStat = currentCharacter[abilities[classInfo]]
+    let charMod = abilityscores[charClassStat]
+
 
 
     const handleDelete = e => {
@@ -80,13 +93,6 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
         toggleChange();
     }
 
-    const handleRemove = e => {
-        e.preventDefault();
-        unassignSpell(e.target.value, currentCharacter.id)
-        setSpells([...currentCharacter.spells])
-        toggleChange()
-    }
-    
     const handleDesc = e => {
         e.preventDefault();
         toggleDesc();
@@ -97,80 +103,92 @@ const CharacterProfile = ({getCharacter, editCharacter, deleteCharacter, unassig
         <CurrentCharacterContext.Provider value={currentCharacter}>       
          <Container className="CharacterProfile">
             <Row>
-                <Col>
-                <h1 className="CharacterProfile-title">{currentCharacter.char_name}</h1>
-                <h2 className="CharacterProfile-class-level"> Level {currentCharacter.lvl} {charClass} </h2>
+                <Col className="name-level">
+                <h1 className="CharacterProfile-title">{currentCharacter.char_name} | Level {currentCharacter.lvl} {charClass} </h1>
                 </Col>
-                <Col xs={3}>
-                    <Container className="CharacterProfile-castingMod">
-                        <Row>
-                            <Col>
-                            <Button ref={target} onClick={() => toggleShow()}>Casting Modifier </Button>
-                            <Overlay target={target.current} show={show} placement="top">
-                                <Tooltip id="overlay-castingMod">
-                                    Each spellcasting class uses a different ability to cast their spells.
-                                </Tooltip>
-                            </Overlay>
-                            </Col>
-                            
-                        </Row>
-                        <Row>
-                            <Col></Col>
-                            <Col>
-                            <h5>{classInfo}</h5>
-                            </Col>
-                            <Col></Col>
-                        </Row>
-                    </Container>
-                </Col>
-               
-            
             </Row>
             
             <Row className="CharacterProfile-ability-scores">
+                <InfoWidget title="Ability Scores" altText="A character's ability score is a value from 0 - 20 that determines how well they perform certain tasks. This score translates to the modifier, which is added to the dice roll for a task using that particular skill." size="title"/>
                 <Col>
-                <AbilityScoreCard className="CharacterProfile-info" ability="Strength" score={currentCharacter.strength} />
+                <AbilityScoreCard className="CharacterProfile-info" ability="STRENGTH" score={currentCharacter.strength} mod={`${abilityscores[currentCharacter.strength]}`}/>
                 </Col>
                 <Col>
-                <AbilityScoreCard className="CharacterProfile-info" ability="Dexterity" score={currentCharacter.dexterity} />
+                <AbilityScoreCard className="CharacterProfile-info" ability="DEXTERITY" score={currentCharacter.dexterity} mod={`${abilityscores[currentCharacter.dexterity]}`} />
                 </Col>
                 <Col>
-                <AbilityScoreCard className="CharacterProfile-info" ability="Constitution" score={currentCharacter.constitution} />
+                <AbilityScoreCard className="CharacterProfile-info" ability="CONSTITUTION" score={currentCharacter.constitution} mod={`${abilityscores[currentCharacter.constitution]}`} />
                 </Col>
                 <Col>
-                <AbilityScoreCard className="CharacterProfile-info" ability="Intelligence" score={currentCharacter.intelligence} />
+                <AbilityScoreCard className="CharacterProfile-info" ability="INTELLIGENCE" score={currentCharacter.intelligence} mod={`${abilityscores[currentCharacter.intelligence]}`} />
                 </Col>
                 <Col>
-                <AbilityScoreCard className="CharacterProfile-info" ability="Wisdom" score={currentCharacter.wisdom} />
+                <AbilityScoreCard className="CharacterProfile-info" ability="WISDOM" score={currentCharacter.wisdom} mod={`${abilityscores[currentCharacter.wisdom]}`}/>
                 </Col>
                 <Col>
-                <AbilityScoreCard className="CharacterProfile-info" ability="Charisma" score={currentCharacter.charisma} />
+                <AbilityScoreCard className="CharacterProfile-info" ability="CHARISMA" score={currentCharacter.charisma} mod={`${abilityscores[currentCharacter.charisma]}`}/>
                 </Col>
             </Row>
+
          {showEdit === true &&
-            <div className="CharacterProfile-editForm">
-                <CharacterEditForm character={currentCharacter} toggleEdit={toggleEdit} editCharacter={editCharacter}/>
-                <button onClick={handleEdit}>Hide Edit</button>
-            </div>
+                <CharacterEditForm character={currentCharacter} toggleEdit={toggleEdit} editCharacter={editCharacter} handleEdit={handleEdit}/>
           }
+          {showEdit === false &&
+          <Container>
+            <Row className="CharacterProfile-showEdit">
+                <Col></Col>
+                <Col>
+                <button onClick={handleEdit}>Edit Character</button>
+                </Col>
+                <Col>
+                <button onClick={handleDelete}>Delete Character</button>
+                </Col>
+                
+                <Col></Col>
+            </Row>
+          </Container>
+        
+          }
+          <hr></hr>
+          
+            <Row>
+                    <Col xs={5}>
+                    <h1>{currentCharacter.char_name}'s Spells</h1> 
+                    </Col>
 
-            
+                    <Col>
+                    <InfoWidget info={`${classInfo}`} title="Casting Modifier" altText="Each spellcasting class uses a different ability to cast their spells and calculate the spell save DC." size="large" />
+                    </Col>
 
-            <button onClick={handleEdit}>Edit</button>
-            <button onClick={handleDelete}>Delete Character</button>
-            
-            
-            <div className="CharacterProfile-spells">
-                <h1>{currentCharacter.char_name}'s Spells</h1>
+                    <Col>
+                    <InfoWidget info={`+${proficiencybonus[currentCharacter.lvl]}`} altText="A character's proficiency bonus is added to skills they are proficient in, and increases as they level up." title="Proficency Bonus" size="large"/>
+                    </Col>
+
+                    <Col>
+                        <InfoWidget info={8 + charMod + profBonus} title="Spell Save DC" altText='The "difficulty class" of the spell, or the number that the target has to beat in order to save against it. Calculated as "8 + Casting Modifier + Proficiency Bonus"' size="large"/>
+                    </Col>
+                </Row>
+            {spells.length != 0 ?
+            <Container className="CharacterProfile-spells">
+                
+                
                 {spells.map(spell => (
-                    <div key={spell} className="CharacterProfile-spellCard">
-                    
-                    <SpellCard  spellIdx={spell} details={showDesc} charProfile={true}/>
-                    <button onClick={handleDesc}>Expand</button>
-                    <button onClick={handleRemove} value={spell}>Remove Spell</button>
-                    </div>
+                    <Row key={spell} className="CharacterProfile-spellCard">
+                        <Col></Col>
+                        <Col xs={9}>
+                        <SpellCard  spellIdx={spell} details={showDesc} charProfile={true} unassignSpell={unassignSpell}/>
+                        </Col>
+                    <Col></Col>
+                    </Row>
                 ))}
-            </div>
+            </Container>
+            : 
+            <Container className="CharacterProfile-spells">
+                <Row>
+                <h2>No spells assigned yet!</h2>
+                </Row>
+            </Container> }
+            
 
 
         </Container>

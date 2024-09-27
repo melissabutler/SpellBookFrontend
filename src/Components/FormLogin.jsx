@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import useFields from "../Hooks/useFields";
 import CurrentUserContext from "../currentUserContext";
 
-import "./LoginForm.css"
+
+import { Col, Row,Container } from 'react-bootstrap';
+
+import "./Form.css"
 
 const LoginForm = ({login}) => {
     let currentUser = useContext(CurrentUserContext)
@@ -38,46 +41,63 @@ const LoginForm = ({login}) => {
 
 
     return (
-        <div className="LoginForm">
-            <h1>Log In</h1>
-            <form className="LoginForm-form" onSubmit={handleSubmit}>
-                <div className="LoginForm-section">
-                    <div className="LoginForm-section-label">
-                    <label className="LoginForm-label" htmlFor="username">Username</label>
-                    </div>
-                    <input 
-                        className="LoginForm-input"
+        <Container className="Form">
+            <Row>
+               <h1>Log In</h1> 
+            </Row>
+            
+            <form className="Form-form" onSubmit={handleSubmit}>
+                    <Row className="Form-section-label">
+                    <label className="Form-label" htmlFor="username">Username</label>
+                    </Row>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                        <input 
+                        className="Form-input"
                         id="username"
                         name="username"
                         type="text"
                         value={formData.username}
                         onChange={handleChange}
                         placeholder="Username"
-                    />
-                </div>
-                
-                <div className="LoginForm-section">
-                    <div className="LoginForm-section-label">
-                    <label htmlFor="password" className="LoginForm-label">Password</label>
-                    </div>
-                    <input
-                        className="LoginForm-input"
+                    /></Col>
+                    <Col></Col>
+
+                    </Row>
+
+                    <Row className="Form-section-label">
+                    <label htmlFor="password" className="Form-label">Password</label>
+                    </Row>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                        <input
+                        className="Form-input"
                         id="password"
                         name="password"
                         type="text"
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Password"
-                    />
-                </div>
-                <div className="LoginForm-section">
+                    /></Col>
+                    <Col></Col>
+                    </Row>
+                <Row>
+                    <Col></Col>
+                    <Col>
                     <button>Log In</button>
-                </div>
+                    </Col>
+                    <Col></Col>
+                    
+                    </Row> 
+          
+                
                 
             </form>
 
 
-        </div>
+        </Container>
     )
 }
 

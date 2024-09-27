@@ -5,7 +5,7 @@
 }
 
 .CharacterList-CreateCharacter {
-    background-color: blue;
+    background-color: lightblue;
 }
 .CharacterList-CreateCharacter a {
     color: white;
@@ -16,9 +16,11 @@
 }
 
 .CharacterList-CreateCharacter h3 {
-    background-color: darkblue;
+    background-color: rgb(41, 77, 144);
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
+    
+    box-shadow: 3px 3px 3px black;
 
 }

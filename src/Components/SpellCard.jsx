@@ -1,31 +1,39 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import CurrentUserContext from "../currentUserContext";
 import SpellBookApi from "../../api";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import AssignSpellForm from "./AssignSpellForm";
-import SpellCardInfo from "./SpellCardInfo";
-import SpellCardDamage from "./SpellCardDamage";
+import InfoWidget from "./WidgetInfo";
 
 
 import "./SpellCard.css"
+import SelectWidget from "./WidgetSelect";
+import useToggle from "../Hooks/useToggleState";
+import SpellLink from "./SpellLink";
+import CurrentCharacterContext from "../currentCharacterContext";
 
 
-const SpellCard = ({assignSpell, 
-                    spellIdx, 
+
+function SpellCard({assignSpell,
+                    unassignSpell,
+                    spellIdx,
                     details, 
-                    charProfile}) => {
+                    charProfile}) {
     const currentUser = useContext(CurrentUserContext)
+    const currentCharacter = useContext(CurrentCharacterContext)
+
+    const { idx } = useParams();
 
     const [spell, setSpell] = useState("")
+
+    const [detail, toggleDetail] = useToggle(details)
+
     const [school, setSchool] = useState("")
     const [cantrip, setCantrip] = useState(false)
-    
     const [aoe, setAoe] = useState("")
     const [baseDamage, setBaseDamage] = useState("")
     const [higherLevel, setHigherLevel] = useState("")
@@ -33,11 +41,32 @@ const SpellCard = ({assignSpell,
     const [charOrSlot, setCharOrSlot] = useState("")
     const [dc, setDC] = useState("")
 
+    const handleClick = e => {
+      e.preventDefault();
+      toggleDetail()
+    }
+
+    const handleRemove = e => {
+      e.preventDefault();
+      unassignSpell(spellIdx, currentCharacter.id)
+    }
+
 
     useEffect ( () => {
         async function getSpell() {
-          let spell = await SpellBookApi.getSpellDetails(spellIdx);
+          let spell = "";
+          
+          /**Get spell information from index, either through url parameter :idx for full spell page, or through prop: spellIdx for character profile list. */
+          if(idx) spell = await SpellBookApi.getSpellDetails(idx);
+          if(spellIdx) spell = await SpellBookApi.getSpellDetails(spellIdx);
 
+          /**
+           * Each spell has a range of potential properties. For example: not every spell inflicts damage. 
+           * 
+           * To account for the presence (or lack thereof) of certain properties, these checks run. 
+           * 
+           * If the properties exists, the values are stored.  
+           */
           if (spell.area_of_effect) {
           setAoe(spell.area_of_effect.size + " ft " + spell.area_of_effect.type)}
 
@@ -65,27 +94,34 @@ const SpellCard = ({assignSpell,
           setSpell({...spell})
           setSchool(spell.school.name)
 
+          /** Level 0 spells are known as cantrips. This value is used cosmetically for referring to them as such in the spell detail page. */
           if(spell.level === 0){
             setCantrip(true)
           }
         }
         getSpell();
-    }, [])
+    }, [detail])
 
    
 
   return (
-    <div className="SpellCard">
       <Container className="SpellCard-content">
+
         <Row className="SpellCard-title">
-          <Col className="SpellCard-title-name">{spell.name}</Col>
+          <Col className="SpellCard-title-name">
+          {charProfile ?
+          <SpellLink spell={spell} charProfile={true}/>
+        :
+          <h3>{spell.name}</h3>}
+          </Col>
           {cantrip ? 
           <Col className="SpellCard-title-school">School of {school} Cantrip</Col> 
           : <Col className="SpellCard-title-school">Level {spell.level} School of {school} Spell</Col>}
 
         </Row>
+      
         
-         {details === true && 
+         {detail === true && 
 
          <Container className="SpellCard-details">
 
@@ -95,88 +131,99 @@ const SpellCard = ({assignSpell,
             <Col></Col>
           </Row>
 
-          {spell.higher_level != 0 ?
-            <Row className="SpellCard-higherLevel">
-              <Col></Col>
-              <Col xs={7}>
-                <Button>Higher Level</Button>
-                <p>{higherLevel}</p>
-              </Col>
-              <Col></Col>
-            </Row>
-               : ""}
-          
           <Row className="SpellCard-damage">
-
+            {spell.higher_level != 0 ?
+              <Col className="SpellCard-higherLevel">
+              <InfoWidget info={higherLevel} title="Higher Level" altText="What are the effects when casting this spell at a higher level?" size="large"/>
+              </Col>
+                  : ""}
             {spell.damage ?
-            <Col className="SpellCard-damage-big">
-              <Row>
-                {spell.damage ? 
-                <Col  className="SpellCard-damage-base">
-                <SpellCardInfo  spellInfo={baseDamage} title="Base Damage" altText="What kind of damage does the spell do at base?"/> 
+              <Col className="SpellCard-info">
+              <InfoWidget info={baseDamage} title="Base Damage" altText="What kind of and How much damage does the spell do at base?" size="large"/>
+              </Col> : "" }
+                
+            {levels != "" ? 
+                <Col className="SpellCard-info">
+                <SelectWidget options={levels} values={spell.damage} source={charOrSlot} size="large"/> 
+                </Col>
+            : ""}
+          </Row>
+            
+          <Row className="SpellCard-details">      
+                {spell.attack_type ?
+                <Col>
+                <InfoWidget info={spell.attack_type} title="Attack Type" altText="Is the spell considered a ranged/melee attack?" size="large" /> 
+                </Col>
+                : ""}
+
+                {spell.dc ? 
+                <Col>
+                <InfoWidget info={dc} title="Spell DC" altText="What type of save does the target have to make against your spell?"  size="large" /> 
+                </Col>
+                : ""}
+            
+                {spell.range ?
+                <Col>
+                <InfoWidget info={spell.range} title="Range" altText="How far away can you cast the spell?"  size="large" /> 
+                </Col>
+                : ""}
+
+                {spell.area_of_effect ?
+                <Col>
+                <InfoWidget info={aoe} title="Area of Effect" altText="What size and shape is the spell effect?"  size="large"/> 
                 </Col>
                 : ""}
                 
-                {levels != "" ? 
-                <Col className="SpellCard-damage-base">
-                  <SpellCardDamage dmgLevels={levels} damage={spell.damage} source={charOrSlot}/> 
-                  </Col>
-                  : ""}
-              </Row>
-            </Col>
-            : ""}
-            
-                  
-            <Col className="SpellCard-damage-small">
-              
-                {spell.attack_type ?
-                <SpellCardInfo small={true} spellInfo={spell.attack_type} title="Attack Type" altText="Is the spell considered a ranged/melee attack?" /> : ""}
-
-                {spell.dc ? 
-                <SpellCardInfo small={true} spellInfo={dc} title="Spell DC" altText="What type of save does the target have to make against your spell?" /> : ""}
-            
-                {spell.range ?
-                <SpellCardInfo spellInfo={spell.range}  small={true} title="Range" altText="How far away can you cast the spell?" /> : ""}
-
-                {spell.area_of_effect ?
-                <SpellCardInfo spellInfo={aoe}  small={true} title="Area of Effect" altText="What size and shape is the spell effect?" /> : ""}
-                
                 {spell.duration ?
-                <SpellCardInfo spellInfo={spell.duration}  small={true} title="Duration" altText="How long does the spell last?" /> : ""}
+                <Col>
+                <InfoWidget info={spell.duration} title="Duration" altText="How long does the spell last?"  size="large" /> 
+                </Col>
+                : ""}
           
-
                 {spell.casting_time ?
-                <SpellCardInfo spellInfo={spell.casting_time} small={true}  title="Casting Time" altText="How long does it take to cast the spell?" /> : ""}
+                <Col>
+                <InfoWidget info={spell.casting_time}  title="Casting Time" altText="How long does it take to cast the spell?"  size="large" /> 
+                </Col>
+                : ""}
 
                 {spell.components ? 
-                <SpellCardInfo spellInfo={spell.components} small={true} title="Components" altText="What does the spell require? Verbal, Somatic, and/or Material?"/> : "" }
+                <Col>
+                <InfoWidget info={spell.components} title="Components" altText="What does the spell require? Verbal, Somatic, and/or Material?"  size="large"/> 
+                </Col>
+                : "" }
 
                 {spell.material ?
-                <SpellCardInfo spellInfo={spell.material} small={true} title="Materials" altText="Does the spell require materials to cast?" /> : ""}
-
-            </Col>
-
-          
-              
+                <Col>
+                <InfoWidget info={spell.material} title="Materials" altText="Does the spell require materials to cast?"  size="large" /> 
+                </Col>
+                : ""}
           </Row>
 
           {!currentUser || charProfile === false &&
             <Row>
-              <Col>
-              <AssignSpellForm assignSpell={assignSpell} spellIdx={spellIdx}/>
+              <Col className="SpellCard-assignSpell">
+              <AssignSpellForm assignSpell={assignSpell} spellIdx={spell.index}/>
               </Col>
               
             </Row>}
     
-          </Container>}
+         </Container>}
+
+         {charProfile === true &&
+          <button onClick={handleClick}>
+            { detail === false ?
+              "Expand" 
+            : "Hide" }
+          </button>
+         }
+         {charProfile === true && 
+         
+         <button onClick={handleRemove}>Remove</button>
+         }
 
      
         
-      </Container>
-          
-        
-    
-    </div>)
+      </Container>)
 }
 
 export default SpellCard;

@@ -3,12 +3,16 @@
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
+    
+    box-shadow: 3px 3px 3px black;
 }
 
 .ListSearch Button {
     margin: 10px;
     background-color: darkslategray;
     font-size: 20px;
+    
+    box-shadow: 3px 3px 3px black;
 }
 
 .ListSearch Button:hover {
@@ -17,4 +21,5 @@
 
 .ListSearch input {
     width: 100%;
+    
 }

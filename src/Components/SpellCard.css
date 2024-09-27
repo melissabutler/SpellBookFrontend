@@ -3,14 +3,17 @@
     margin: auto;
     background-color: red;
     border-radius: 10px;
-    width: inherit;
+    width: 80vw;
     height: inherit;
     color: black;
+    
 }
 
 .SpellCard-content {
     background-color: darkred;
     padding: 20px;
+    
+    box-shadow: 3px 3px 3px black;
 }
 
 .SpellCard-title {
@@ -21,6 +24,8 @@
     color: black;
     font-size: inherit;
     text-align: center;
+    
+    box-shadow: 3px 3px 3px black;
 }
 
 .SpellCard-title-name {
@@ -33,123 +38,12 @@
     border-radius: 10px;
     padding: 30px;
     margin: 10px;
+    box-shadow: 3px 3px 3px black;
 }
 
-.SpellCard-higherLevel {
-    text-align: center;
+.SpellCard-assignSpell {
     background-color: white;
-    color: black;
-    border-radius: 10px;
-    padding: 30px;
     margin: 10px;
-}
-
-.SpellCard-higherLevel Button {
-    background-color: darkslategray;
-}
-
-.SpellCard-damage {
-    /* margin: 20px;
-    padding: 30px; */
-    height: 500px;
-    color: black;
-    background-color: rgb(65, 0, 0);
-    text-align: center;
-    place-content: center;
-}
-
-.SpellCard-damage-big {
-    /* width: 100%; */
-    /* height: 100%; */
-    place-content: center;
-}
-
-.SpellCard-damage-big .SpellCard-info {
-    height: 200px;
-    width: 100%;
-    padding: 20px;
-}
- 
-.SpellCard-damage-small {
-    /* width: 50px; */
-    height: 100%;
-    float: right;
-    place-content: center;
-} 
-.SpellCard-damage-small .SpellCard-info{
-    width: 100%;
-    text-align: left;
-    height: 60px;
-    margin: 10px;
-}
-
-.SpellCard-info {
-    width: 200px;
-    height: 130px;
-    place-content: center;
-    background-color: white;
-    color: black;
     border-radius: 10px;
-    /* margin: 20px; */
-    /* padding: 10px; */
-}  
-.SpellCard-info Button {
-    background-color: darkslategray;
-    padding: 10px;
-    /* margin: 10px; */
 }
 
-.SpellCard-info h6 {
-    margin: .75rem;
-}
-
-.SpellCard-info Button:hover {
-    background-color: black;
-}
-/* Total width/height with padding:  240px */
-
-/* 
-
-.level-select {
-    width: 50px;
-    height: 50px;
-    font-size: 12px;
-} */
-/* 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-
-.tooltip .tooltip-text {
-    visibility: hidden;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    width: 100px;
-    bottom: 90%;
-    left: 50%;
-    margin-left: -70px;
-    padding: 20px;
-    border-radius: 10px;
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltip .tooltip-text::after {
-    content: " ";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
-    z-index: 1;
-  }
-
-.tooltip:hover .tooltip-text {
-    visibility: visible;
-} */

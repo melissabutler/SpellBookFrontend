@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import CurrentUserContext from "./currentUserContext";
@@ -6,16 +6,15 @@ import CurrentUserContext from "./currentUserContext";
 //Components
 
 import Home from "./Components/Home";
-import LoginForm from "./Components/LoginForm";
-import SignupForm from "./Components/SignupForm";
-import LogOut from "./Components/LogOut";
+import LoginForm from "./Components/FormLogin";
+import SignupForm from "./Components/FormSignup";
+import LogOut from "./Components/FormLogOut";
 import Profile from "./Components/Profile"
 
 import SpellList from "./Components/SpellList";
-import SpellDetail from "./Components/SpellDetail"
+import SpellCard from "./Components/SpellCard";
 
 import CharacterList from "./Components/CharacterList";
-
 import CharacterForm from "./Components/CharacterForm";
 import CharacterProfile from "./Components/CharacterProfile";
 
@@ -60,7 +59,10 @@ const RoutesList = ({login,
                 />
             <Route 
                 path="/spells/:idx"
-                element={<SpellDetail assignSpell={assignSpell}/>}
+                element={<SpellCard assignSpell={assignSpell}
+                                    unassignSpell={unassignSpell}
+                                    details={true}
+                                    charProfile={false}/>}
             />
             <Route 
                 path="/characters"
@@ -75,9 +77,9 @@ const RoutesList = ({login,
             <Route 
                 path="/characters/:id"
                 element={ currentUser ? (<CharacterProfile getCharacter={getCharacter} 
+                                                            unassignSpell={unassignSpell}
                                                             editCharacter={editCharacter} 
                                                             deleteCharacter={deleteCharacter}
-                                                            unassignSpell={unassignSpell}
                                                             getClass={getClass}
                     />) : <Navigate replace to="/"/>}
                 /> 

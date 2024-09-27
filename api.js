@@ -39,7 +39,6 @@ class SpellBookApi {
     /**  GET entire list of spells */
     static async getAllSpells() {
         let res = await axios.get(`${DND_BASE_URL}/spells`)
-        // console.log(res)
         return res.data.results;
     };
 
@@ -92,7 +91,6 @@ class SpellBookApi {
     /** Retrieve a user's data */
     static async getUser({token}, username) {
         SpellBookApi.token = token;
-        // console.log("inapi", token, username)
         let res = await this.request(`users/${username}`, token.token, "get")
         return res;
     }
@@ -114,54 +112,47 @@ class SpellBookApi {
 
     /** ////////////////////////////////// CHARACTER ROUTES  */
 
-    /** Get all characters belonging to a user */
 
     /** Create a new character and assign to user */
-    static async createCharacter(token, newCharacter) {
+    static async createCharacter(token, newCharacter, username) {
         SpellBookApi.token = token;
-        let res = await this.request(`characters`, newCharacter, "post")
+        let res = await this.request(`users/${username}/characters`, newCharacter, "post")
         return res;
     }
 
     /**Retrieve character data */
-    static async getCharacter(token, char_id) {
+    static async getCharacter(token, char_id, username) {
         SpellBookApi.token = token;
-        let res = await this.request(`characters/${char_id}`, token.token, "get")
+        let res = await this.request(`users/${username}/characters/${char_id}`, token.token, "get")
         return res.character;
     }
 
     /** Edit character data */
-    static async editCharacter({updatedCharacter}, token, char_id) {
+    static async editCharacter({updatedCharacter}, token, char_id, username) {
         SpellBookApi.token = token;
-        let res = await this.request(`characters/${char_id}`, updatedCharacter, "patch")
+        let res = await this.request(`users/${username}/characters/${char_id}`, updatedCharacter, "patch")
         return res;
     }
 
     /** Assign spell to character */
-    static async assignSpell(spellIdx, token, char_id) {
+    static async assignSpell(spellIdx, token, char_id, username) {
         SpellBookApi.token = token;
-        let res = await this.request(`characters/${char_id}/spell_cards/${spellIdx}`, token.token, "post")
+        let res = await this.request(`users/${username}/characters/${char_id}/spell_cards/${spellIdx}`, token.token, "post")
         return res;
     }
 
     /** Unassign spell from character */
-    static async unassignSpell(spellIdx, token, char_id) {
+    static async unassignSpell(spellIdx, token, char_id, username) {
         SpellBookApi.token = token;
-        let res = await this.request(`characters/${char_id}/spell_cards/${spellIdx}`, token.token, "delete")
+        let res = await this.request(`users/${username}/characters/${char_id}/spell_cards/${spellIdx}`, token.token, "delete")
         return res;
     }
 
     /** Delete Character */
-    static async deleteCharacter(id) {
-        let res = await this.request(`characters/${id}`, id, "delete")
+    static async deleteCharacter(id, username) {
+        let res = await this.request(`users/${username}/characters/${id}`, id, "delete")
         return res;
     }
-
-    /** //////////////////////////////////// SPELL_CARD ROUTES */
-
-    //may put spell assign/unassign here
-
-    /** Create a new spell card if not in api already */
 
 }
 

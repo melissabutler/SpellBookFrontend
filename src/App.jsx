@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
-//Create currentUserContext
 import CurrentUserContext from './currentUserContext';
 
 import RoutesList from './RoutesList';
@@ -10,7 +9,7 @@ import NavBar from './Components/NavBar';
 import SpellBookApi from '../api';
 import useLocalStorage from './Hooks/useLocalStorage';
 
-// import './App.css'
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -21,6 +20,7 @@ function App() {
   /** On load of page, check if user token or change to user token.
    * if yes: set currentUser throughout app
   */
+
  useEffect(function checkUserLogin() {
   async function getData() {
     if(token) {
@@ -84,8 +84,7 @@ async function editUser({updatedUser}) {
  */
 async function createCharacter(newCharacter) {
   try {
-    console.log(newCharacter)
-    let res = await SpellBookApi.createCharacter(token, newCharacter);
+    let res = await SpellBookApi.createCharacter(token, newCharacter, currentUser.username);
     return res;
   } catch(err){
     alert(err);
@@ -96,8 +95,7 @@ async function createCharacter(newCharacter) {
 
 async function getCharacter(char_id) {
   try {
-    // console.log("in app token", token)
-    let res = await SpellBookApi.getCharacter(token, char_id)
+    let res = await SpellBookApi.getCharacter(token, char_id, currentUser.username)
     return res;
   } catch(err) {
     alert(err);
@@ -109,8 +107,7 @@ async function getCharacter(char_id) {
 
 async function editCharacter({updatedCharacter}, char_id) {
   try {
-    console.log("In app", updatedCharacter, char_id)
-    let res = await SpellBookApi.editCharacter({updatedCharacter}, token, char_id)
+    let res = await SpellBookApi.editCharacter({updatedCharacter}, token, char_id, currentUser.username)
     return res;
   } catch(err) {
     alert(err);
@@ -120,7 +117,7 @@ async function editCharacter({updatedCharacter}, char_id) {
 /** When delete is called, call API to delete a character. */
 async function deleteCharacter(char_id) {
   try {
-    let res = await SpellBookApi.deleteCharacter(char_id)
+    let res = await SpellBookApi.deleteCharacter(char_id, currentUser.username)
   } catch(err) {
     alert(err);
   }
@@ -129,7 +126,7 @@ async function deleteCharacter(char_id) {
 /** When spell is assigned to character, call API to update character */
 async function assignSpell(spellIdx, char_id){
   try {
-    let res = await SpellBookApi.assignSpell(spellIdx, token, char_id)
+    let res = await SpellBookApi.assignSpell(spellIdx, token, char_id, currentUser.username)
   } catch(err) {
     alert(err);
   }
@@ -137,7 +134,8 @@ async function assignSpell(spellIdx, char_id){
 
 async function unassignSpell(spellIdx, char_id){
   try {
-    let res = await SpellBookApi.unassignSpell(spellIdx, token, char_id)
+    let res = await SpellBookApi.unassignSpell(spellIdx, token, char_id, currentUser.username)
+    alert(`${spellIdx} has been removed.`)
   } catch(err) {
     alert(err);
   }

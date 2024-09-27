@@ -17,17 +17,18 @@ function NavBar() {
         ]
         
     } else {
+    // If logged in, show these links
         links = [
-        <Link className="NavBar-link content" key="characters" to="/characters">My Characters</Link>,
+        <Link className="NavBar-link content" key="characters" to="/characters" >My Characters</Link>,
         <Link className="NavBar-link user" key="logout" to="/logout">Log Out</Link>,
         <Link className="NavBar-link user" key="profile" to="/profile">Profile</Link>
        
 ]
     }
-    // If logged in, show these links
+    
     return (
         <nav className="NavBar">
-            <Link className="NavBar-link home" key="home" to="/">DnD 5e SpellBook</Link>
+            <Link className="NavBar-link home" key="home" to="/">D&D 5e SpellBook</Link>
             <Link className="NavBar-link content" key="spells" to="/spells">Spells</Link>
             {links}
         </nav>

@@ -1,15 +1,15 @@
 import { useState } from "react";
 
+//Helper function for establishing a useState variable that only toggles between two different values.
+
 function useToggle(initialVal = false) {
-    //call useState, reserve a piece of state
     const [value, setValue] = useState(initialVal);
 
     const toggle = () => {
         setValue(oldValue => !oldValue);
     }
 
-    //return state and the toggle function
-    return [value, toggle]
+    return [value, toggle];
 }
 
 export default useToggle;

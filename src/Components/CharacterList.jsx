@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-import CharacterCard from "./CharacterCard";
+import CharacterLink from "./CharacterLink";
 
 import "./CharacterList.css"
 
@@ -37,7 +37,7 @@ const CharacterList = () => {
             <Col xs={7}>
                 {characters.map(character => (
                     <Link key={character.id} to={`/characters/${character.id}`}>
-                            <CharacterCard key={character.id} character={character}/>
+                            <CharacterLink key={character.id} character={character}/>
                     </Link>
                   ))}
              
@@ -49,7 +49,7 @@ const CharacterList = () => {
             <Row className="CharacterList-CreateCharacter">
                 <Col></Col>
                 <Col>
-                    <Link className="CharacterList-CreateCharacterLink" to="/characters/create">
+                    <Link className="CharacterList-CreateCharacterLink" to={`create`}>
                     <h3>Create a new character!</h3>
                     </Link>
                 </Col>

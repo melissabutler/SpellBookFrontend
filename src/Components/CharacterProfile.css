@@ -1,3 +1,21 @@
+.CharacterProfile {
+    background-color: lightblue;
+    text-align: center;
+    place-content: center;
+    
+}
+
+.name-level {
+    background-color: aqua;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.name-level h1 {
+    background-color: white;
+    
+}
+
 .CharacterProfile-castingMod {
     text-align: center;
     background-color: slategray;
@@ -7,12 +25,33 @@
 
 }
 
+.CharacterProfile h1 {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    height: 100%;
+    place-content: center;
+    
+    box-shadow: 3px 3px 3px black;
+
+}
+
+.CharacterProfile-spellCard .Widget {
+    padding: 5px;
+    
+}
+
+.CharacterProfile-spellCard select{
+    font-size: 1rem;
+    width: 50%;
+}
 
 
-.CharacterProfile-castingMod Button {
-    background-color: rgb(205, 205, 205);
-    color: black;
-    font-weight: bold;
-    margin: 10px;
-    padding: 10px
+.CharacterProfile-spellCard h4{
+    font-size: 1rem;
+
+}
+
+.CharacterProfile-spellCard Button {
+    font-size: 1rem;
 }

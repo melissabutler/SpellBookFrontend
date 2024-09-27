@@ -1,16 +1,24 @@
-.LoginForm {
+.Form {
     text-align: center;
 }
 
-.LoginForm-form {
+.Form-form {
     margin: 20px;
+    
 }
 input {
     margin: 1rem;
     width: 50vw;
     padding: 1rem;
+    border-radius: 10px;
 }
 button {
     margin: 20px;
+    padding: 10px;
     float: none;
+    box-shadow: 3px 3px 3px black;
+    
+}
+.row {
+    margin: 10px;
 }

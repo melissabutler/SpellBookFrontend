@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 
 import SpellBookApi from "../../api.js"
 
 import ListSearch from "./ListSearch.jsx";
-import SpellCard from "./SpellCard.jsx";
 import SpellLink from "./SpellLink.jsx";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import "./SpellList.css"
 
 
-const SpellList = () => {
+function SpellList() {
     const [spells, setSpells] = useState([]);
     const [classSearch, setClass] = useState("");
     const [level, setLevel] = useState("");
@@ -88,6 +84,7 @@ const SpellList = () => {
                 </Col>
                 <Col></Col>
             </Row>
+
             <Row className="SpellList-list">
                 <Col></Col>
                 <Col>

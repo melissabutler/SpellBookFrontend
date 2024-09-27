@@ -1,0 +1,30 @@
+.Widget{
+    padding: 30px;
+    border-radius: 10px;
+    height: 100%;
+    color: black;
+    background-color: white;
+    text-align: center;
+    place-content: center;
+    box-shadow: 3px 3px 3px black;
+}
+
+select {
+    width: 8rem;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.Widget Button {
+    background-color: darkslategray;
+}
+
+.Widget Button:hover {
+    background-color: black;
+}
+
+
+
+.Widget, .title Button {
+    font-size: 2rem;
+}
