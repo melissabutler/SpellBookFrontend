@@ -12,7 +12,7 @@ const SpellLink = ({spell, charProfile}) => {
            {charProfile === true ?
            <h5>{spell.name}</h5>
             :
-        <h5>Level {spell.level}: {spell.name}</h5>
+            <h5>Level {spell.level}: {spell.name}</h5>
             }
             
             </Link> 

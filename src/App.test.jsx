@@ -1,16 +1,41 @@
-import { describe, it, expect } from "vitest";
-import { render, renderHook, screen } from '@testing-library/react'
+import React from "react";
+import { describe, it, expect, vi } from "vitest";
+import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import App from './App'
+import CurrentUserContext from "./currentUserContext";
 
-describe("A truthy statement", () => {
-    it("should be equal to 2", () => {
-        expect(1+1).toEqual(2)
-    })
-})
+describe("App", function() {
 
-describe("App", () => {
-    it('renders the App component', () => {
+
+    vi.mock('react', async (importOriginal) => {
+        const react = await importOriginal('react');
+        return {
+            ...react,
+            useContext: () => ({ currentUser: {
+                username: 'u1',
+                email: 'email@email.com',
+                isAdmin: false,
+                characters: []}}),
+                
+    }})
+
+
+
+
+    it('renders the App component', async () => {
         render(<App />)
         screen.debug();
+      
+    });
+
+
+
+    it('matches snapshot', () => {
+        const { asFragment } = render(<App />);
+        expect(asFragment()).toMatchSnapshot();
     })
-});
+
+
+
+})
+   

@@ -154,6 +154,7 @@ async function getClass(classIdx) {
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>
+        
         <BrowserRouter>
           <NavBar />
           <RoutesList login={login} 

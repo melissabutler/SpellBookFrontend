@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[` Home > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Home"
+  >
+    <div
+      class="Home-content"
+    >
+      <h1
+        class="Home-title"
+      >
+        Dungeons and Dragons 5th Edition SpellBook
+      </h1>
+      <div
+        class="Home-login"
+      >
+        <h3>
+          Welcome back, 
+        </h3>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
