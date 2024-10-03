@@ -58,6 +58,7 @@ function App() {
  /** When signup form is called, Call API to register a new user. If successful, set token */
 async function signUp({newUser}) {
   try {
+    console.log(newUser)
     let res = await SpellBookApi.RegisterUser({newUser})
     setToken(res.token)
   } catch(err) {
