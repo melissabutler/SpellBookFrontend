@@ -27,15 +27,17 @@ const CharacterProfile = ({getCharacter,
                             deleteCharacter, 
                             unassignSpell, 
                             getClass}) => {
+
     const [currentCharacter, setCurrentCharacter] = useLocalStorage("currentCharacter", {})
+
     const [showEdit, toggleEdit] = useToggle(false)
     const [showDesc, toggleDesc] = useToggle(false)
-    const [change, toggleChange] = useToggle(true)
+    
     const [spells, setSpells] = useState([])
     const [classInfo, setClassInfo] = useState([])
-    const [classRef, setClassRef] = useState("")
-    const [castingMod, setCastingMod] = useState("");
-    const [profBonus, setProfBonus] = useState("")
+
+    const [charClass, setCharClass] = useState("")
+    const [spellSave, setSpellSave]= useState('')
 
     let { id } = useParams();
    
@@ -45,39 +47,25 @@ const CharacterProfile = ({getCharacter,
     useEffect( () => {
         async function getData() { 
             let data = await getCharacter(id)
+            let classData = await getClass(data.char_class);
             setCurrentCharacter({...data})
             setSpells([...data.spells])
+            setCharClass(data.char_class[0].toUpperCase() + data.char_class.slice(1))
+            setSpellSave( 8 + abilityscores[data[abilities[classData.data.spellcasting.spellcasting_ability.name]]] + proficiencybonus[data.lvl])
+            setClassInfo(classData.data.spellcasting.spellcasting_ability.name)
         }
         
         getData();
     }, [])
-
-    useEffect (() => {
-        async function getClassData() {
-            let data = await getClass(currentCharacter.char_class)
-            setClassInfo(data.data.spellcasting.spellcasting_ability.name)
-            
-            setProfBonus(proficiencybonus[currentCharacter.lvl])
-        }
-        getClassData()
-    }, [currentCharacter])
-
-
-    
 
     /** When Edit status toggles, update character  */
     useEffect( () => {
         async function updateCharacter() {
             let data = await getCharacter(id)
             setCurrentCharacter({...data})
-
         }
         updateCharacter();
     }, [showEdit])
-
-    let charClass = currentCharacter.char_class[0].toUpperCase() + currentCharacter.char_class.slice(1)
-    let charClassStat = currentCharacter[abilities[classInfo]]
-    let charMod = abilityscores[charClassStat]
 
 
 
@@ -90,13 +78,11 @@ const CharacterProfile = ({getCharacter,
     const handleEdit = e => {
         e.preventDefault();
         toggleEdit();
-        toggleChange();
     }
 
     const handleDesc = e => {
         e.preventDefault();
         toggleDesc();
-        toggleChange();
     }
 
     return (
@@ -165,7 +151,7 @@ const CharacterProfile = ({getCharacter,
                     </Col>
 
                     <Col>
-                        <InfoWidget info={8 + charMod + profBonus} title="Spell Save DC" altText='The "difficulty class" of the spell, or the number that the target has to beat in order to save against it. Calculated as "8 + Casting Modifier + Proficiency Bonus"' size="large"/>
+                        <InfoWidget info={spellSave} title="Spell Save DC" altText='The "difficulty class" of the spell, or the number that the target has to beat in order to save against it. Calculated as "8 + Casting Modifier + Proficiency Bonus"' size="large"/>
                     </Col>
                 </Row>
             {spells.length != 0 ?

@@ -3,7 +3,7 @@ import CurrentUserContext from "../currentUserContext";
 import { Link } from "react-router-dom";
 
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import CharacterLink from "./CharacterLink";
 
@@ -19,9 +19,8 @@ const CharacterList = () => {
             setCharacters([...currentUser.characters])
         }
         getData();
+        
     }, []);
-
-
     return (
         
         <Container className="CharacterList">

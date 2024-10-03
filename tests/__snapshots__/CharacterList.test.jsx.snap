@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CharacterList > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="CharacterList container"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h1>
+          My Characters
+        </h1>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      />
+      <div
+        class="col-7"
+      >
+        //
+      </div>
+      <div
+        class="col"
+      />
+    </div>
+    <div
+      class="CharacterList-CreateCharacter row"
+    >
+      <div
+        class="col"
+      />
+      <div
+        class="col"
+      >
+        /
+      </div>
+      <div
+        class="col"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

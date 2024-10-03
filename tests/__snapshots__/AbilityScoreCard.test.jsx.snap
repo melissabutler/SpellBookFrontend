@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Ability Score Card > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="AbilityScoreCard container"
+  >
+    <div
+      class="row"
+    >
+      <h4
+        class="AbilityScoreCard-ability"
+      />
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      />
+      <div
+        class="col-7"
+      >
+        <h5
+          class="AbilityScoreCard-score"
+        />
+      </div>
+      <div
+        class="col"
+      />
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      />
+      <div
+        class="col"
+      >
+        <h6
+          class="AbilityScoreCard-mod"
+        />
+      </div>
+      <div
+        class="col"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

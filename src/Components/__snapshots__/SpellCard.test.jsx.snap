@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SpellCard > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="SpellCard-content container"
+  >
+    <div
+      class="SpellCard-title row"
+    >
+      <div
+        class="SpellCard-title-name col"
+      >
+        <h3 />
+      </div>
+      <div
+        class="SpellCard-title-school col"
+      >
+        Level  School of  Spell
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

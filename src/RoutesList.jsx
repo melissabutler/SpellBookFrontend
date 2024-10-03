@@ -30,7 +30,7 @@ const RoutesList = ({login,
                         unassignSpell,
                         getClass
 }) => {
-    const currentUser = useContext(CurrentUserContext)
+    const currentUser = useContext(CurrentUserContext);
 
     return (
         <Routes>

@@ -1,7 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`App > matches snapshot 1`] = `
+exports[`SpellLink > matches snapshot 1`] = `
 <DocumentFragment>
-  <div />
+  <div
+    class="container"
+  />
 </DocumentFragment>
 `;

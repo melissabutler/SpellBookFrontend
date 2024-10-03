@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProfileEditForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Form container"
+  >
+    <div
+      class="row"
+    >
+      <h2>
+        Update User Email
+      </h2>
+    </div>
+    <form
+      class="Form-form"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        />
+        <div
+          class="col"
+        >
+          <label
+            class="Form-label"
+            for="email"
+          >
+            Email
+          </label>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+      <div
+        class="row"
+      >
+        <input
+          class="Form-input"
+          id="email"
+          name="email"
+          placeholder="Email Address"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        />
+        <div
+          class="col"
+        >
+          <button>
+            Submit
+          </button>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;

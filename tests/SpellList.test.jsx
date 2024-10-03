@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import SpellList from "./SpellList";
-import SpellBookApi from "../../api";
+import SpellList from "../src/Components/SpellList";
+import SpellBookApi from "../api";
 
 
 

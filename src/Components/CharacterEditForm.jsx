@@ -62,7 +62,7 @@ const CharacterEditForm = ({editCharacter, toggleEdit, handleEdit}) => {
              <form className="CharacterForm-form" >
             <Row>
                     <Col className="CharacterForm-section">
-                        <h5 className="CharacterForm-h4">Character Name</h5>
+                        <h5 htmlFor="char_name" className="CharacterForm-h4">Character Name</h5>
                     
                         <input
                             className="CharacterForm-input"

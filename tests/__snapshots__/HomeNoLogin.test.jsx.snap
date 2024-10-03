@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[` HomeNoLogin > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Home-nologin"
+  >
+    <h1>
+       Not logged in
+    </h1>
+    <button
+      class="Home-button"
+    />
+    <button
+      class="Home-button"
+    />
+  </div>
+</DocumentFragment>
+`;

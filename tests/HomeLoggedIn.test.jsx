@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
-import Home from "./Home";
+import HomeLoggedIn from "../src/Components/HomeLoggedIn";
 
-describe(" Home", function() {
+describe(" HomeLoggedIn", function() {
 
     vi.mock('react', async (importOriginal) => {
         const react = await importOriginal('react');
@@ -26,11 +26,31 @@ describe(" Home", function() {
 
 
     it("renders without crashing", async function() {
-        render(<Home />)
+        render(<HomeLoggedIn user={{username: 'u1',
+            email: 'email@email.com',
+            isAdmin: false,
+            characters: [
+                {
+                char_class: "cleric",
+                char_name: "Beebo",
+                id: 1,
+                lvl: 3
+            },
+            ]}}/>)
     })
 
     it("matches snapshot", function() {
-        const { asFragment } = render(<Home />);
+        const { asFragment } = render(<HomeLoggedIn user={{username: 'u1',
+            email: 'email@email.com',
+            isAdmin: false,
+            characters: [
+                {
+                char_class: "cleric",
+                char_name: "Beebo",
+                id: 1,
+                lvl: 3
+            },
+            ]}} />);
         expect(asFragment()).toMatchSnapshot();
     })
 

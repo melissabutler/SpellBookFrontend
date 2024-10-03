@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AssignSpellForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Form container"
+  >
+    <form
+      class="Form-form"
+    >
+      <div
+        class="Form-label row"
+      >
+        <div
+          class="col"
+        />
+        <div
+          class="col"
+        >
+          <label
+            for="id"
+          >
+            Assign spell to character:
+          </label>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        />
+        <div
+          class="col"
+        >
+          <select
+            id="char_id"
+            name="char_id"
+          >
+            <option
+              value=""
+            >
+              Select character
+            </option>
+            <option
+              value="1"
+            >
+              Beebo
+            </option>
+            <option
+              value="2"
+            >
+              Melba
+            </option>
+          </select>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        />
+        <div
+          class="col"
+        >
+          <button>
+             Submit
+          </button>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;
