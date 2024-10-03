@@ -1,8 +1,9 @@
 import axios from "axios";
-import DND_BASE_URL from "./secret/DND_BASE_URL";
+import { ESModulesRunner } from "vite/runtime";
 
 const BASE_URL = import.meta.env.REACT_APP_BASE_URL || "http://localhost:3001"
 
+const DND_BASE_URL = 'https://www.dnd5eapi.co/api';
 /** API CLASS
  * 
  * Static class tying together methods to get/send to the API.
