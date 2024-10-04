@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001"
+const BASE_URL = import.meta.env.BASE_URL || "http://localhost:3001";
 
 const DND_BASE_URL = 'https://www.dnd5eapi.co/api';
 /** API CLASS
