@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFields from "../Hooks/useFields";
 import { useNavigate } from "react-router-dom"
 import CurrentUserContext from "../currentUserContext";
+
+import checkPassword from "./checkPassword";
 
 
 import { Col, Row, Container } from 'react-bootstrap';
@@ -10,6 +12,7 @@ import "./Form.css"
 
 const SignupForm = ({signUp}) => {
     const currentUser = useContext(CurrentUserContext)
+    const [pass, setPass] = useState('')
     
     const navigate = useNavigate()
 
@@ -24,15 +27,27 @@ const SignupForm = ({signUp}) => {
         if(!formData.username || !formData.password || !formData.email){
             alert("Please fill out the form.")
         } else {
-            let newUser = {
+            let strength = checkPassword(formData.password.toString())
+            console.log(strength)
+            if(strength === "Weak") {
+                setPass('weak')
+            } else if (strength === "Medium"){
+                setPass('medium')
+            } else if (strength === "Strong"){
+                let newUser = {
                 "username": formData.username.toString(),
                 "password": formData.password.toString(),
                 "email": formData.email.toString()
             }
-                signUp({newUser})
+            signUp({newUser})
+            }
+
+            
+                
             
         }   
     }
+
 
     useEffect(function navIfSignUp() {
         async function checkUser() {
@@ -91,7 +106,11 @@ const SignupForm = ({signUp}) => {
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Password"
-                    />
+                        />
+                        {pass === "weak" &&
+                        <p>Weak strength password, please include uppercase letters, numbers, and symbols.</p>}
+                        {pass === "medium" && 
+                        <p>Medium strength password, please include uppercase letters, numbers, and symbols. </p>}
                     </Col>
                     <Col></Col>
                 </Row>

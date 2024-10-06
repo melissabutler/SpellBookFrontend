@@ -86,7 +86,7 @@ const CharacterProfile = ({getCharacter,
         navigate('/characters')
     }
     
-    const handleEdit = e => {
+    const handleEdit = async e => {
         e.preventDefault();
         toggleEdit();
     }
@@ -128,7 +128,7 @@ const CharacterProfile = ({getCharacter,
             </Row>
 
          {showEdit === true &&
-                <CharacterEditForm character={currentCharacter}  editCharacter={editCharacter} handleEdit={handleEdit}/>
+                <CharacterEditForm character={currentCharacter}  editCharacter={editCharacter} toggleEdit={toggleEdit} handleEdit={handleEdit}/>
           }
           {showEdit === false &&
           <Container>
