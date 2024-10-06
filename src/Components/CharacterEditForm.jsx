@@ -24,7 +24,7 @@ const CharacterEditForm = ({editCharacter, toggleEdit, handleEdit}) => {
         charisma: character.charisma,
 })
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
   
         let updatedCharacter = {
@@ -39,7 +39,7 @@ const CharacterEditForm = ({editCharacter, toggleEdit, handleEdit}) => {
             "charisma": parseInt(formData.charisma)
         }
         
-        editCharacter({updatedCharacter}, id)
+        await editCharacter({updatedCharacter}, id)
         toggleEdit();
     }
 
