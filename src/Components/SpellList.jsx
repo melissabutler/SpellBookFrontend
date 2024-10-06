@@ -1,96 +1,102 @@
-import { useContext } from "react";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 
-import CurrentUserContext from "./currentUserContext";
 
-//Components
+import SpellBookApi from "../../api.js"
 
-import Home from "./Components/Home";
-import LoginForm from "./Components/FormLogin";
-import SignupForm from "./Components/FormSignup";
-import LogOut from "./Components/FormLogOut";
-import Profile from "./Components/Profile"
+import ListSearch from "./ListSearch.jsx";
+import SpellLink from "./SpellLink.jsx";
 
-import SpellList from "./Components/SpellList";
-import SpellCard from "./Components/SpellCard";
+import { Container, Row, Col } from 'react-bootstrap';
 
-import CharacterList from "./Components/CharacterList";
-import CharacterProfile from "./Components/CharacterProfile";
+import "./SpellList.css"
 
-const RoutesList = ({login, 
-                        signUp, 
-                        logOut,
-                        getUser,
-                        editUser, 
-                        getCharacter, 
-                        createCharacter, 
-                        editCharacter, 
-                        deleteCharacter,
-                        assignSpell,
-                        unassignSpell,
-                        getClass
-}) => {
-    const currentUser = useContext(CurrentUserContext);
+
+function SpellList() {
+    const [spells, setSpells] = useState([]);
+    const [classSearch, setClass] = useState("");
+    const [level, setLevel] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
+
+    /** On change of search terms, page change to show un/filtered list of spells. */
+    useEffect ( () => {
+        async function getData() {
+            //If there is no search parameters
+            if( classSearch === "" || level === ""){
+                let data = await SpellBookApi.getAllSpells();
+                setSpells([...data])
+            }
+            //If there is level parameter but not class
+            if( classSearch === "" && level != ""){
+                let data = await SpellBookApi.getFilteredSpells(undefined, level)
+                setSpells([...data])
+            }
+            //if there is class parameter but no level
+            if(classSearch != "" && level === ""){
+                let data = await SpellBookApi.getFilteredSpells(classSearch, undefined)
+                setSpells([...data])
+            }
+            //if there is both class and level parameter
+            if(classSearch != "" && level != ""){
+                let data = await SpellBookApi.getFilteredSpells(classSearch, level)
+                setSpells([...data])
+            }
+            
+            
+            
+        }
+        getData();
+    }, [classSearch, level]);
+
+
+    const getTerm = (getClass, getLevel) => {
+        setClass(getClass);
+        setLevel(getLevel);
+    }
+
+    const getSearchTerm = (newTerm) => {
+        setSearchTerm(newTerm)
+    }
+
+    const filteredData = spells.filter((spell) => {
+        if(searchTerm === "") {
+            return spell;
+        } else {
+            return spell.name.toLowerCase().match(searchTerm)
+        }
+    })
 
     return (
-        <Routes>
-            {/* USER ROUTES */}
-            <Route
-                path='/'
-                element={<Home />}
-                />
-            <Route
-                path='/login'
-                element={<LoginForm login={login}/>}
-                />
-            <Route 
-                path='/signup'
-                element={<SignupForm signUp={signUp} />}
-                />
-            <Route 
-                path='/logout'
-                element={currentUser ? (<LogOut logOut={logOut}/>) : <Navigate replace to="/"/>}
-                />
-
-            {/* Spell Routes */}
-            <Route 
-                path="/spells"
-                element={<SpellList />}
-                />
-            <Route 
-                path="/spells/:idx"
-                element={<SpellCard assignSpell={assignSpell}
-                                    getUser={getUser}
-                                    unassignSpell={unassignSpell}
-                                    details={true}
-                                    charProfile={false}/>}
-            />
-            <Route 
-                path="/characters"
-                element={currentUser ? (<CharacterList createCharacter={createCharacter} getUser={getUser}/>) : <Navigate replace to="/"/>}
-                /> 
-
-
-            <Route 
-                path="/characters/:id"
-                element={ currentUser ? (<CharacterProfile getCharacter={getCharacter} 
-                                                            unassignSpell={unassignSpell}
-                                                            editCharacter={editCharacter} 
-                                                            deleteCharacter={deleteCharacter}
-                                                            getClass={getClass}
-                    />) : <Navigate replace to="/"/>}
-                /> 
-
-
-            <Route 
-                path='/profile'
-                element={currentUser ? (<Profile editUser={editUser}/>) : <Navigate replace to="/"/>}
-                />
-
+        <Container className="SpellList">
+            <Row>
+                <Col></Col>
+                <Col>
+                <h1 className="SpellList-title">Spell List</h1>
+                </Col>
+                <Col></Col>
+                
+            </Row>
             
+            <Row className="SpellList-search">
+                <Col></Col>
+                <Col xs={7}>
+                    <ListSearch className="SpellList-search-select" getSearchTerm={getSearchTerm} getTerm={getTerm}/>
+                </Col>
+                <Col></Col>
+            </Row>
+
+            <Row className="SpellList-list">
+                <Col></Col>
+                <Col>
+                {filteredData.map(spell => (
+                    <SpellLink key={spell.index} spell={spell} />
+                ))}
+                </Col>
+                <Col></Col>
+                
+            </Row>
             
-        </Routes>
+        </Container>
     )
 }
 
-export default RoutesList;
+export default SpellList;
