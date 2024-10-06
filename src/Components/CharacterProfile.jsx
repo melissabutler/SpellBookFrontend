@@ -80,9 +80,9 @@ const CharacterProfile = ({getCharacter,
     }, [deleteSpell])
 
 
-    const handleDelete = e => {
+    const handleDelete = async e => {
         e.preventDefault();
-        deleteCharacter(id)
+        await deleteCharacter(id)
         navigate('/characters')
     }
     

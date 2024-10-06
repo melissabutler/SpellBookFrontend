@@ -24,9 +24,8 @@ const CharacterList = ({getUser, createCharacter}) => {
 
     useEffect(() => {
         async function getData() {
-            let data = await getUser()
+            let data = await getUser();
             setCharacters([...data.user.characters])
-            console.log(data.user)
         }
         getData();
         
