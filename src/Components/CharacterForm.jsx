@@ -9,7 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import "./CharacterForm.css"
 
-const CharacterForm = ({createCharacter}) => {
+const CharacterForm = ({createCharacter, toggleForm}) => {
     const currentUser = useContext(CurrentUserContext);
     const [newCharacter, setNewCharacter] = useState([])
     const [characterMade, toggleCharacterMade] = useToggle(false)
@@ -29,7 +29,7 @@ const CharacterForm = ({createCharacter}) => {
         
     })
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
         if(!formData.char_name || !formData.char_class || !formData.lvl){
             alert("Please fill out character name, class, and level in order to proceed with character creation.")
@@ -48,21 +48,11 @@ const CharacterForm = ({createCharacter}) => {
            
             newCharacter.username = currentUser.username;
             setNewCharacter(newCharacter)
-            toggleCharacterMade();
+            let data = await createCharacter(newCharacter);
+            navigate(`/characters/${data.newCharacter.id}`)
+            toggleForm();
         }
     }
-
-    useEffect( () => {
-        async function navAfterCreate() {
-            if(characterMade) {
-                let data = await createCharacter(newCharacter)
-                toggleCharacterMade(false);
-                navigate(`/characters/${data.newCharacter.id}`)
-            }
-
-        }
-        navAfterCreate();
-    }, [characterMade])
 
     /** This piece condenses the options list for numeric stats, in this case character level and ability scores.
      * As they both are a range from 1-20, they can share this list. 
@@ -170,65 +160,7 @@ const CharacterForm = ({createCharacter}) => {
                     {statRange}
                 </select>
                 </Col>
-                {/* <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="strength">Strength</label>
-                    </div>
-                <select id="strength" value={formData.strength} name="strength" onChange={handleChange}>
-                    <option key="placeholder" value="">STR</option>
-                    {statRange}
-                </select>
-                </div>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="dexterity">Dexterity</label>
-                    </div>
-                <select id="dexterity" value={formData.dexterity} name="dexterity" onChange={handleChange}>
-                    <option key="placeholder" value="">DEX</option>
-                    {statRange}
-                </select>
-                </div>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="constitution">Constitution</label>
-                    </div>
-                <select id="constitution" value={formData.constitution} name="constitution" onChange={handleChange}>
-                    <option key="placeholder" value="">CON</option>
-                    {statRange}
-                </select>
-                </div>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="intelligence">Intelligence</label>
-                    </div>
-                <select id="intelligence" value={formData.intelligence} name="intelligence" onChange={handleChange}>
-                    <option key="placeholder" value="">INT</option>
-                    {statRange}
-                </select>
-                </div>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="wisdom">Wisdom</label>
-                    </div>
-                <select id="wisdom" value={formData.wisdom} name="wisdom" onChange={handleChange}>
-                    <option key="placeholder" value="">WIS</option>
-                    {statRange}
-                </select>
-                </div>
-
-                <div className="CharacterForm-section">
-                    <div className="CharacterForm-section-label">
-                        <label className="CharacterForm-label" htmlFor="charisma">Charisma</label>
-                    </div>
-                <select id="charisma" value={formData.charisma} name="charisma" onChange={handleChange}>
-                    <option key="placeholder" value="">CHA</option>
-                    {statRange}
-                </select>
-                </div> */}
+               
             </Row>
         <button> Create a Character</button>
             </form>

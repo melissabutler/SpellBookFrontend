@@ -43,9 +43,7 @@ class SpellBookApi {
 
     /** GET filtered list of spells by CLASS, LEVEL, or BOTH */
     static async getFilteredSpells(classType, level) {
-        console.log("classtype is", classType);
         if (!classType) {
-            console.log("level is", level)
             let res = await axios.get(`${DND_BASE_URL}/spells?level=${level}`)
             return res.data.results;
         } 

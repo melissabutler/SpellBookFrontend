@@ -8,15 +8,14 @@ import { Container, Row, Col } from "react-bootstrap"
 import CurrentUserContext from "../currentUserContext";
 import useFields from "../Hooks/useFields"
 
-const AssignSpellForm = ({assignSpell, spellIdx}) => {
+const AssignSpellForm = ({assignSpell, spellIdx, getUser}) => {
     let navigate = useNavigate();
-    const currentUser = useContext(CurrentUserContext)
     const [characters, setCharacters] = useState([])
-    const [character, setCharacter] = useState([])
 
     useEffect( () => {
         async function getCharacters() {
-            setCharacters([...currentUser.characters])
+            let data = await getUser();
+            setCharacters([...data.user.characters])
         }
         getCharacters();
     }, [])
@@ -25,7 +24,7 @@ const AssignSpellForm = ({assignSpell, spellIdx}) => {
         char_id: undefined,
     })
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
         if(!formData.char_id){
             alert("Please choose a character to assign the spell.")
@@ -34,7 +33,7 @@ const AssignSpellForm = ({assignSpell, spellIdx}) => {
             "id": parseInt(formData.char_id),
         } 
         
-        assignSpell(spellIdx, assignedCharacter.id)
+        await assignSpell(spellIdx, assignedCharacter.id)
         navigate(`/characters/${assignedCharacter.id}`)
     }
 
