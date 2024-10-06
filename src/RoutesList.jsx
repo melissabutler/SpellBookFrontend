@@ -19,9 +19,9 @@ import CharacterProfile from "./Components/CharacterProfile";
 
 const RoutesList = ({login, 
                         signUp, 
-                        logOut, 
-                        editUser,
-                        getUser, 
+                        logOut,
+                        getUser,
+                        editUser, 
                         getCharacter, 
                         createCharacter, 
                         editCharacter, 
@@ -67,7 +67,7 @@ const RoutesList = ({login,
             />
             <Route 
                 path="/characters"
-                element={currentUser ? (<CharacterList createCharacter={createCharacter} getuser={getUser}/>) : <Navigate replace to="/"/>}
+                element={currentUser ? (<CharacterList createCharacter={createCharacter} getUser={getUser}/>) : <Navigate replace to="/"/>}
                 /> 
 
 
