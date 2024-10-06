@@ -15,13 +15,13 @@ import SpellList from "./Components/SpellList";
 import SpellCard from "./Components/SpellCard";
 
 import CharacterList from "./Components/CharacterList";
-import CharacterForm from "./Components/CharacterForm";
 import CharacterProfile from "./Components/CharacterProfile";
 
 const RoutesList = ({login, 
                         signUp, 
                         logOut, 
-                        editUser, 
+                        editUser,
+                        getUser, 
                         getCharacter, 
                         createCharacter, 
                         editCharacter, 
@@ -60,19 +60,16 @@ const RoutesList = ({login,
             <Route 
                 path="/spells/:idx"
                 element={<SpellCard assignSpell={assignSpell}
+                                    getUser={getUser}
                                     unassignSpell={unassignSpell}
                                     details={true}
                                     charProfile={false}/>}
             />
             <Route 
                 path="/characters"
-                element={currentUser ? (<CharacterList/>) : <Navigate replace to="/"/>}
+                element={currentUser ? (<CharacterList createCharacter={createCharacter} getuser={getUser}/>) : <Navigate replace to="/"/>}
                 /> 
 
-            <Route
-                path="/characters/create"
-                element={ currentUser ? (<CharacterForm createCharacter={createCharacter}/>) : <Navigate replace to="/"/>}
-            />
 
             <Route 
                 path="/characters/:id"

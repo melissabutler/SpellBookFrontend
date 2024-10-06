@@ -22,7 +22,10 @@ function SpellCard({assignSpell,
                     unassignSpell,
                     spellIdx,
                     details, 
-                    charProfile}) {
+                    charProfile,
+                    toggleSpellDelete,
+                    getUser
+                  }) {
     const currentUser = useContext(CurrentUserContext)
     const currentCharacter = useContext(CurrentCharacterContext)
 
@@ -46,9 +49,10 @@ function SpellCard({assignSpell,
       toggleDetail()
     }
 
-    const handleRemove = e => {
+    const handleRemove = async e => {
       e.preventDefault();
-      unassignSpell(spellIdx, currentCharacter.id)
+      await unassignSpell(spellIdx, currentCharacter.id)
+      toggleSpellDelete();
     }
 
 
@@ -202,9 +206,8 @@ function SpellCard({assignSpell,
           {!currentUser || charProfile === false &&
             <Row>
               <Col className="SpellCard-assignSpell">
-              <AssignSpellForm assignSpell={assignSpell} spellIdx={spell.index}/>
+              <AssignSpellForm assignSpell={assignSpell} getUser={getUser} spellIdx={spell.index}/>
               </Col>
-              
             </Row>}
     
          </Container>}

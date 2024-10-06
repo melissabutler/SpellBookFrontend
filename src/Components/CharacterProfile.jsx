@@ -32,9 +32,12 @@ const CharacterProfile = ({getCharacter,
 
     const [showEdit, toggleEdit] = useToggle(false)
     const [showDesc, toggleDesc] = useToggle(false)
+    const [deleteSpell, toggleSpellDelete] = useToggle(false)
+    const [assignSpellContext, toggleAssignSpellContext] = useToggle(false)
     
     const [spells, setSpells] = useState([])
     const [classInfo, setClassInfo] = useState([])
+    
 
     const [charClass, setCharClass] = useState("")
     const [spellSave, setSpellSave]= useState('')
@@ -68,6 +71,14 @@ const CharacterProfile = ({getCharacter,
     }, [showEdit])
 
 
+    useEffect(() => {
+        async function deleteSpellAssignment() {
+            let data = await getCharacter(id)
+            setSpells([...data.spells])
+        }
+        deleteSpellAssignment();
+    }, [deleteSpell])
+
 
     const handleDelete = e => {
         e.preventDefault();
@@ -86,7 +97,7 @@ const CharacterProfile = ({getCharacter,
     }
 
     return (
-        <CurrentCharacterContext.Provider value={currentCharacter}>       
+        <CurrentCharacterContext.Provider value={currentCharacter}>   
          <Container className="CharacterProfile">
             <Row>
                 <Col className="name-level">
@@ -117,7 +128,7 @@ const CharacterProfile = ({getCharacter,
             </Row>
 
          {showEdit === true &&
-                <CharacterEditForm character={currentCharacter} toggleEdit={toggleEdit} editCharacter={editCharacter} handleEdit={handleEdit}/>
+                <CharacterEditForm character={currentCharacter}  editCharacter={editCharacter} handleEdit={handleEdit}/>
           }
           {showEdit === false &&
           <Container>
@@ -162,7 +173,7 @@ const CharacterProfile = ({getCharacter,
                     <Row key={spell} className="CharacterProfile-spellCard">
                         <Col></Col>
                         <Col xs={9}>
-                        <SpellCard  spellIdx={spell} details={showDesc} charProfile={true} unassignSpell={unassignSpell}/>
+                        <SpellCard  spellIdx={spell} details={showDesc} charProfile={true} unassignSpell={unassignSpell} toggleEdit={toggleEdit} toggleSpellDelete={toggleSpellDelete}/>
                         </Col>
                     <Col></Col>
                     </Row>
@@ -179,6 +190,7 @@ const CharacterProfile = ({getCharacter,
 
         </Container>
         </CurrentCharacterContext.Provider>
+         
 
     )
 }

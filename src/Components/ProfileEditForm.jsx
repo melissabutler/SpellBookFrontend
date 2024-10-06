@@ -23,7 +23,7 @@ const ProfileEditForm = ({editUser}) => {
             "email": formData.email.toString(),
         }
         editUser({updatedUser})
-        navigate('/profile')
+        navigate('/')
     }
 
     return(

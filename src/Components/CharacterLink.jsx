@@ -7,7 +7,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 const CharacterLink = ({character}) => {
 
     let charClass = character.char_class[0].toUpperCase() + character.char_class.slice(1);
-    console.log(character)
 
 
     return (

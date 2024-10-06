@@ -33,6 +33,12 @@ function App() {
   getData();
  }, [token]);
 
+ async function getUser(){
+  let res = await SpellBookApi.getUser({token}, currentUser.username)
+  return res;
+ }
+
+
  /** When login is called, call API. If successfull, set token */
 
  async function login({user}) {
@@ -58,7 +64,6 @@ function App() {
  /** When signup form is called, Call API to register a new user. If successful, set token */
 async function signUp({newUser}) {
   try {
-    console.log(newUser)
     let res = await SpellBookApi.RegisterUser({newUser})
     setToken(res.token)
   } catch(err) {
@@ -161,7 +166,8 @@ async function getClass(classIdx) {
           <RoutesList login={login} 
                       signUp={signUp} 
                       logOut={logOut} 
-                      editUser={editUser} 
+                      editUser={editUser}
+                      getUser={getUser}
                       getCharacter={getCharacter} 
                       createCharacter={createCharacter} 
                       editCharacter={editCharacter} 
