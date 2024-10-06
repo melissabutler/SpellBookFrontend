@@ -33,7 +33,6 @@ const CharacterProfile = ({getCharacter,
     const [showEdit, toggleEdit] = useToggle(false)
     const [showDesc, toggleDesc] = useToggle(false)
     const [deleteSpell, toggleSpellDelete] = useToggle(false)
-    const [assignSpellContext, toggleAssignSpellContext] = useToggle(false)
     
     const [spells, setSpells] = useState([])
     const [classInfo, setClassInfo] = useState([])
@@ -75,6 +74,7 @@ const CharacterProfile = ({getCharacter,
         async function deleteSpellAssignment() {
             let data = await getCharacter(id)
             setSpells([...data.spells])
+            console.log(deleteSpell)
         }
         deleteSpellAssignment();
     }, [deleteSpell])
