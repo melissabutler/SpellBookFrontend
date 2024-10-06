@@ -22,11 +22,11 @@ const CharacterList = ({getUser, createCharacter}) => {
         toggleForm();
     }
 
-
     useEffect(() => {
         async function getData() {
             let data = await getUser()
             setCharacters([...data.user.characters])
+            console.log(data.user)
         }
         getData();
         
